@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head> <title>Szavazás</title> </h:head> 
+<body> 
+		<h:form>
+		<h:selectOneMenu id="terulet" value="#{dbManager.t}" onchange="submit()">
+			<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
+		</h:selectOneMenu>
+		<h:selectOneMenu id="beosztas" value="#{dbManager.b}">
+			<f:selectItems value="#{dbManager.getBeosztasok()}" ></f:selectItems>
+		</h:selectOneMenu>
+		</h:form>
+		<h:form>
+		<div style="border: 1px solid black; float: left">
+		<div>Bejelentkezes:</div>
+			<p:dataTable id="tablazat" var="u" value="#{dbManager.userek}">
+				<p:column>
+								<f:facet name="header">Név</f:facet>
+								<h:outputFormat value="#{u.cNev}" />
+			    </p:column>
+			    <p:column>
+								<f:facet name="header">#SzavazatiErő</f:facet>
+								<h:outputFormat value="#{u.cDolgozokod}" />
+				</p:column>
+				<p:column>
+								<f:facet name="header">Kiválaszt</f:facet>
+								<h:commandButton action="#{szavazas.requestSzavaz(u)}" value="Szavazok Gáborra" />
+				</p:column>
+			</p:dataTable>
+		</div>
+		</h:form>
+</body> 
+</html>

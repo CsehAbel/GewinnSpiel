@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head></h:head>
+<body style="background-color: white;">
+	<div>
+		<div style="width: 50%; height: 50%; margin: auto; background-color: grey; border-radius: 10px; padding: 5px; " >
+			<h:form>
+				<h:inputText value="#{loginBean.dolgozokod}" />
+				<h:commandButton action="#{loginBean.doLogin()}" value="bejelentkezés" />
+				<h:messages globalOnly="true"/>
+				<!-- bejelentkezve megjelenik -->
+				<div jsf:rendered="#{loginBean.loggedIn}">
+					<div>#{loginBean.dolgozokod}</div>
+					<div>#{loginBean.nev}</div>
+					<div>#{loginBean.admin}</div>
+					<h:commandButton action="#{loginBean.doLogout()}" value="kijelentkezés" />
+				</div>
+			</h:form>
+		</div>
+	</div>
+</body>
+</html>
