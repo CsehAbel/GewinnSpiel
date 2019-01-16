@@ -10,8 +10,6 @@ import java.util.List;
 @SessionScoped
 public class Szavazas implements Serializable {
 	
-	private List<User> userek;
-	
 	private Date date1; 
 	
 	private IState iState;
@@ -54,10 +52,6 @@ public class Szavazas implements Serializable {
 
 	public void setDate1(Date date1) {
 		this.date1 = date1;
-	}
-
-	public List<User> getUserek() {
-		return userek;
 	}
 	
 	public void clear(){

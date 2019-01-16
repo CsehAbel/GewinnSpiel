@@ -3,6 +3,7 @@ package newfile;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
@@ -20,15 +21,68 @@ public class DbManager {
 	
 	private String t;
 	
+	public List<csv> userek;
+	
 	private String b;
 	
-	public List<csv> getUserek(){
+	private String d;
+	
+	@PostConstruct
+	public void init(){
+		d="";
+	}
+	
+	public void concd(int i){
+		d=""+d+""+i;
+		System.out.println("d:"+d);
+		if(d.length()==5){
+			Query query;
+			query = em.createQuery("FROM csv AS c where c.cDolgozokod = :k");
+			query.setParameter("k", d);
+			List<csv> list= (List<csv>) query.getResultList();
+			userek=list;
+			//System.out.println(userek.get(0).getcNev());
+			d="";
+		}
 		
-		Query query = em.createNativeQuery("FROM csv AS c where c.cTerulet = :t AND c.cBeosztas = :b");
-		query.setParameter("t", t);
-		query.setParameter("b", b);
+	}
+	
+	public void backsd(){
+		String str="";
+		char[] s=d.toCharArray();
+		for(int i=0;i<s.length-1;i++){
+			str+=s[i];
+		}
+		d=str;
+	}
+	
+	public String valaszt(){
+		if(t==null){
+			t=getTeruletekNemSelectItem().get(0);
+		}
+		if(!getBeosztasokNemSelectItem().contains(b)){
+			b=getBeosztasokNemSelectItem().get(0);
+		}
+		fM();
+		return "submit()";
+	}
+	
+	public void fM(){
+		Query query;
+		query = em.createQuery("FROM csv AS c where c.cTerulet = :t AND c.cBeosztas = :b");
+		if(t==null){
+			query.setParameter("t", t=getTeruletekNemSelectItem().get(0));
+			query.setParameter("b", b=getBeosztasokNemSelectItem().get(0));
+			System.out.println("t="+t);
+			System.out.println("b="+b);
+		} else{
+			query.setParameter("t", t);
+			query.setParameter("b", b);
+			System.out.println("t="+t);
+			System.out.println("b="+b);
+		}
 		List<csv> list= (List<csv>) query.getResultList();
-		return list;
+		userek=list;
 	}
 	
 	public List<SelectItem> getTeruletek(){
@@ -38,7 +92,6 @@ public class DbManager {
 		List<SelectItem> si=new ArrayList<SelectItem>();
 		for(String s:list){
 			si.add(new SelectItem(s,s));
-			System.out.println(s);
 		}
 		return si;
 	}
@@ -51,10 +104,35 @@ public class DbManager {
 		List<SelectItem> si=new ArrayList<SelectItem>();
 		for(String s:list){
 			si.add(new SelectItem(s,s));
-			System.out.println(s);
 		}
 		return si;}
 		else{ return null;}
+	}
+	
+	public List<String> getBeosztasokNemSelectItem(){
+		if(t!=null){
+			Query query= em.createNativeQuery("SELECT DISTINCT k.cBeosztas FROM csv k where cTerulet = :pT");
+			query.setParameter("pT",t);
+			List<String> list = (List<String>) query.getResultList();
+			return list;
+		} else{
+			return null;
+		}
+	}
+	
+	public List<String> getTeruletekNemSelectItem(){
+			
+			Query query= em.createNativeQuery("SELECT DISTINCT k.cTerulet FROM csv k");
+			List<String> list = (List<String>) query.getResultList();
+			return list;
+		}
+
+	public List<csv> getUserek() {
+		return userek;
+	}
+
+	public void setUserek(List<csv> userek) {
+		this.userek = userek;
 	}
 
 	public String getT() {
@@ -71,5 +149,13 @@ public class DbManager {
 
 	public void setB(String b) {
 		this.b = b;
+	}
+
+	public String getD() {
+		return d;
+	}
+
+	public void setD(String d) {
+		this.d = d;
 	}
 }

@@ -5,36 +5,62 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui" 
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head> <title>Szavazás</title> </h:head> 
 <body> 
 		<h:form>
-		<h:selectOneMenu id="terulet" value="#{dbManager.t}" onchange="submit()">
-			<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
-		</h:selectOneMenu>
-		<h:selectOneMenu id="beosztas" value="#{dbManager.b}">
-			<f:selectItems value="#{dbManager.getBeosztasok()}" ></f:selectItems>
-		</h:selectOneMenu>
+			<h:selectOneMenu id="terulet" value="#{dbManager.t}" onchange="#{dbManager.valaszt()}">
+				<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
+				
+			</h:selectOneMenu>
+			<h:selectOneMenu id="beosztas" value="#{dbManager.b}" onchange="submit()">
+				<f:selectItems value="#{dbManager.getBeosztasok()}" ></f:selectItems>
+					
+			</h:selectOneMenu>
 		</h:form>
-		<h:form>
-		<div style="border: 1px solid black; float: left">
-		<div>Bejelentkezes:</div>
-			<p:dataTable id="tablazat" var="u" value="#{dbManager.userek}">
-				<p:column>
-								<f:facet name="header">Név</f:facet>
-								<h:outputFormat value="#{u.cNev}" />
-			    </p:column>
-			    <p:column>
-								<f:facet name="header">#SzavazatiErő</f:facet>
-								<h:outputFormat value="#{u.cDolgozokod}" />
-				</p:column>
-				<p:column>
-								<f:facet name="header">Kiválaszt</f:facet>
-								<h:commandButton action="#{szavazas.requestSzavaz(u)}" value="Szavazok Gáborra" />
-				</p:column>
-			</p:dataTable>
-		</div>
+		<h:form id="cForm">
+			<table>
+				<c:forEach var="j" begin="0" end="2">
+				<tr>
+				<c:forEach var="i" begin="1" end="3">
+		          <td>
+			          <h:commandButton action="#{dbManager.concd((j*3)+i)}" value="#{(j*3)+i}">
+			          	<f:ajax execute="cForm" render="cForm tablazat"/>
+			          </h:commandButton>  
+		          </td>
+	        	</c:forEach> 
+	        	</tr>
+	        	</c:forEach>
+				<tr>
+					<td><h:commandButton action="#{dbManager.concd(0)}" value="#{0}">
+			          		<f:ajax execute="cForm" render="cForm tablazat"/>
+			            </h:commandButton> </td>
+					<td><h:commandButton action="#{dbManager.backsd()}" value="Törlés">
+			          		<f:ajax execute="cForm" render="cForm"/>
+			            </h:commandButton> </td>
+				</tr>
+			</table>
+			<label>#{dbManager.d}</label>
 		</h:form>
-</body> 
+			
+			<div style="border: 1px solid black; float: left">
+				<div>Bejelentkezes:</div>
+				<p:dataTable id="tablazat" var="u" value="#{dbManager.userek}">
+					<p:column>
+									<f:facet name="header">Név</f:facet>
+									<h:outputFormat value="#{u.cNev}" />
+				    </p:column>
+				    <p:column>
+									<f:facet name="header">#SzavazatiErő</f:facet>
+									<h:outputFormat value="#{u.cDolgozokod}" />
+					</p:column>
+					<p:column>
+									<f:facet name="header">Kiválaszt</f:facet>
+									<h:commandButton action="#{szavazas.requestSzavaz(u)}" value="Szavazok Gáborra" />
+					</p:column>
+				</p:dataTable>
+			</div>
+</body>
 </html>
