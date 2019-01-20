@@ -9,7 +9,10 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.persistence.Query;
 
+import authentication.User;
+
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Named
@@ -32,12 +35,30 @@ public class DbManager {
 		d="";
 	}
 	
+	public csv findUser(String dolgozokod){
+		csv c=null;
+		Query query;
+		query=em.createQuery("FROM csv c WHERE c.cDolgozokod = :k");
+		query.setParameter("k", dolgozokod);
+		try{c=(csv) query.getSingleResult();
+		}catch(NoResultException ex){
+			
+		}
+		return c;
+	}
+	
+	public List<csv> allUser(){
+		Query query;
+		query=em.createQuery("FROM csv AS c ORDER BY c.kapott");
+		return (List<csv>) query.getResultList();
+	}
+	
 	public void concd(int i){
 		d=""+d+""+i;
 		System.out.println("d:"+d);
 		if(d.length()==5){
 			Query query;
-			query = em.createQuery("FROM csv AS c where c.cDolgozokod = :k");
+			query = em.createNamedQuery("find_user");
 			query.setParameter("k", d);
 			List<csv> list= (List<csv>) query.getResultList();
 			userek=list;
@@ -65,6 +86,16 @@ public class DbManager {
 		}
 		fM();
 		return "submit()";
+	}
+	
+	
+	public void nullazas(){
+		Query query;
+		query = em.createQuery("UPDATE csv set szavazat = :szavazat, kapott = :kapott");
+		query.setParameter("szavazat", 1);
+		query.setParameter("kapott", 0);
+		int db=query.executeUpdate();
+		System.out.println("update-elt sorok:"+db+"db");
 	}
 	
 	public void fM(){

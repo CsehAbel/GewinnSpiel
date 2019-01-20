@@ -11,12 +11,15 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import newfile.DbManager;
+import newfile.csv;
+
 @Named
 @SessionScoped
 public class LoginBean implements Serializable {
 	
 		@EJB
-		private UserManager um;
+		private DbManager dm;
 
 		private String dolgozokod;
 		private String nev;
@@ -29,11 +32,11 @@ public class LoginBean implements Serializable {
 		private NavigationBean nav;
 		
 		public String doLogin(){
-			User user=um.getUser(dolgozokod);
+			csv user=dm.findUser(dolgozokod);
 			if(user!=null){ //&&this.Pass.equals(pass)){
-					nev=user.getNev();
+					nev=user.getcNev();
 					loggedIn=true;
-					if(user.getAdmin()==1){
+					if(user.getAdminn()==1){
 						this.admin=true;
 						return nav.redirectToAdmin();
 					} 
@@ -43,7 +46,7 @@ public class LoginBean implements Serializable {
 					}
 					
 			}
-			FacesMessage msg=new FacesMessage("Hibás felhasználó, bejelentkezés átugrása", "Bejelentkezési_Hiba");
+			FacesMessage msg=new FacesMessage("Hibás kód!", "Bejelentkezési_Hiba");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return nav.toLogin();

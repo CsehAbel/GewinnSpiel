@@ -1,3 +1,4 @@
+import newfile.csv;
 
 public class ZarvaState implements IState {
 	
@@ -25,7 +26,7 @@ public class ZarvaState implements IState {
 	}
 
 	@Override
-	public void szavaz(User u) {
+	public void szavaz(csv t) {
 		// TODO Auto-generated method stub
 	}
 

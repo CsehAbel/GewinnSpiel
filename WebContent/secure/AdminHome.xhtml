@@ -7,6 +7,9 @@
 
 <h:head></h:head> 
 <body> 
+						<h:form><div>#{loginBean.nev} bejelentkezve</div>
+						<div><h:commandLink action="#{loginBean.doLogout()}" value="Kijelentkezés" /></div>
+						</h:form>
 	<h:form enctype="multipart/form-data">
 	    <h:inputFile value="#{Csv.file}">
 	        <f:ajax listener="#{Csv.save}" />
@@ -26,10 +29,10 @@
 	<h:form>
 		<div>Eredményhirdetés:</div>
 		<div>
-			<p:dataTable id="tablazat2" var="u" value="#{szavazas.userek}">
+			<p:dataTable id="tablazat2" var="u" value="#{dbManager.allUser()}">
 				<p:column>
 								<f:facet name="header">Név</f:facet>
-								<h:outputFormat value="#{u.nev}" />
+								<h:outputFormat value="#{u.cNev}" />
 			    </p:column>
 				<p:column>
 								<f:facet name="header">#Kapott</f:facet>

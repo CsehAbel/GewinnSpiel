@@ -1,10 +1,12 @@
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
+import newfile.DbManager;
+import newfile.csv;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Named
 @SessionScoped
@@ -13,17 +15,12 @@ public class Szavazas implements Serializable {
 	private Date date1; 
 	
 	private IState iState;
+	
+	@EJB
+	private DbManager dbManager;
 
 	public Szavazas(){
 		this.iState=new ZarvaState(this);
-		userek=new ArrayList<User>();
-		userek.add(new User("gábor",1));
-		userek.add(new User("andi",1));
-		userek.add(new User("bandi",1));
-		userek.add(new User("nándor",1));
-		userek.add(new User("szandi",1));
-		userek.add(new User("gáborka",1));
-		userek.add(new User("ubul",1));
 	}
 	
 	public void requestNyit(){
@@ -34,8 +31,10 @@ public class Szavazas implements Serializable {
 		this.iState.zar();
 	}
 	
-	public void requestSzavaz(User u){
-		this.iState.szavaz(u);
+	public void requestSzavaz(csv t){
+		//System.out.println("iState: "+iState.getClass().getName());
+		iState.szavaz(t);
+		
 	}
 	
 	public void changeState(IState iState){
@@ -55,13 +54,6 @@ public class Szavazas implements Serializable {
 	}
 	
 	public void clear(){
-		userek=new ArrayList<User>();
-		userek.add(new User("gábor",1));
-		userek.add(new User("andi",1));
-		userek.add(new User("bandi",1));
-		userek.add(new User("nándor",1));
-		userek.add(new User("szandi",1));
-		userek.add(new User("gáborka",1));
-		userek.add(new User("ubul",1));
+		dbManager.nullazas();
 	}
 }

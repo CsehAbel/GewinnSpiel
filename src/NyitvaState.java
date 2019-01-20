@@ -1,7 +1,14 @@
+import javax.ejb.EJB;
+
+import newfile.DbManager;
+import newfile.csv;
 
 public class NyitvaState implements IState {
 	
 	private Szavazas szavazas;
+	
+	@EJB
+	private DbManager dbManager;
 	
 	public NyitvaState(Szavazas szavazas){
 		this.szavazas=szavazas;
@@ -25,12 +32,13 @@ public class NyitvaState implements IState {
 
 
 	@Override
-	public void szavaz(User u) {
-		// TODO Auto-generated method stub
-		if(u.getSzavazatok()>0){
-		u.setSzavazatok(u.getSzavazatok()-1);
-		int gabor=szavazas.getUserek().indexOf(new User("gábor",1));
-		szavazas.getUserek().get(gabor).setKapott(szavazas.getUserek().get(gabor).getKapott()+1);;
+	public void szavaz(csv t) {
+		csv c=dbManager.findUser("55030");
+		if(c.getSzavazat()>0){
+		c.setSzavazat(c.getSzavazat()-1);
+		//SET oszlophoz hozzáadás
+		System.out.println("setkapott");
+		t.setKapott(t.getKapott()+1);
 		}
 	}
 }

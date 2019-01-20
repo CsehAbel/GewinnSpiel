@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head>
+<h:outputStylesheet name="css/keksablon.css" />
+<ui:insert name="head"></ui:insert>
+</h:head> 
+<body style="#{trueFalseCSS.css()}">
+	<div>
+		<h:form>
+			<!-- bejelentkezve megjelenik -->
+			<div jsf:rendered="#{loginBean.loggedIn}">
+				<div>#{loginBean.dolgozokod}</div>
+				<div>#{loginBean.nev}</div>
+				<div>#{loginBean.admin}</div>
+				<h:commandButton action="#{loginBean.doLogout()}" value="kijelentkezés" />
+			</div>
+		</h:form>
+	</div> 	
+	<ui:insert name="szalag"></ui:insert>
+	<ui:insert name="kozep"></ui:insert>
+	<ui:insert name="lab"></ui:insert>
+</body> 
+</html>

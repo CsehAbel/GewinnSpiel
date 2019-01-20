@@ -10,6 +10,10 @@
 
 <h:head> <title>Szavazás</title> </h:head> 
 <body> 
+						<h:form>
+						<div>#{loginBean.nev} bejelentkezve</div>
+						<div><h:commandLink action="#{loginBean.doLogout()}" value="Kijelentkezés" /></div>
+						</h:form>
 		<h:form>
 			<h:selectOneMenu id="terulet" value="#{dbManager.t}" onchange="#{dbManager.valaszt()}">
 				<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
@@ -44,7 +48,7 @@
 			</table>
 			<label>#{dbManager.d}</label>
 		</h:form>
-			
+		<h:form>
 			<div style="border: 1px solid black; float: left">
 				<div>Bejelentkezes:</div>
 				<p:dataTable id="tablazat" var="u" value="#{dbManager.userek}">
@@ -58,9 +62,12 @@
 					</p:column>
 					<p:column>
 									<f:facet name="header">Kiválaszt</f:facet>
-									<h:commandButton action="#{szavazas.requestSzavaz(u)}" value="Szavazok Gáborra" />
+									<h:commandButton action="#{szavazas.requestSzavaz(u)}" value="Rá szavazok!">
+									<f:ajax execute="@this" render="@this"></f:ajax>
+									</h:commandButton>
 					</p:column>
 				</p:dataTable>
 			</div>
+		</h:form>
 </body>
 </html>

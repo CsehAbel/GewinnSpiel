@@ -1,0 +1,25 @@
+.belep{background-color:rgb(31,51,192);
+	width:30%;
+	height: 30%;
+	margin: 10%	 auto;
+	box-shadow: 3px 3px black;
+	border-radius: 5px;
+	border: 2px solid white;}
+input[type="text"]{width: 70%;
+	height: 30%;
+	margin: 2% 14%;
+	box-shadow: 1px 1px black;
+	border-radius: 5px;
+	font-size: 2em;}
+input[type="submit"]{
+	width: 7%;
+	height: 20%;
+	margin: 2% 14% 0% 14%;
+	box-shadow: 1px 1px black;
+	border-radius: 5px;
+	padding: 1px;}
+.bejel{
+	background-size: contain; 
+	background-repeat: no-repeat; 
+	background-position: center;
+}

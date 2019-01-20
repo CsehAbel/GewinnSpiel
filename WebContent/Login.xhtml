@@ -6,23 +6,17 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-<h:head></h:head>
-<body style="background-color: white;">
-	<div>
-		<div style="width: 50%; height: 50%; margin: auto; background-color: grey; border-radius: 10px; padding: 5px; " >
-			<h:form>
-				<h:inputText value="#{loginBean.dolgozokod}" />
-				<h:commandButton action="#{loginBean.doLogin()}" value="bejelentkezés" />
-				<h:messages globalOnly="true"/>
-				<!-- bejelentkezve megjelenik -->
-				<div jsf:rendered="#{loginBean.loggedIn}">
-					<div>#{loginBean.dolgozokod}</div>
-					<div>#{loginBean.nev}</div>
-					<div>#{loginBean.admin}</div>
-					<h:commandButton action="#{loginBean.doLogout()}" value="kijelentkezés" />
-				</div>
-			</h:form>
-		</div>
-	</div>
-</body>
+<ui:composition template="KekSablon.xhtml">
+<ui:define name="head">
+<h:outputScript name="css/login.css"></h:outputScript>
+</ui:define>
+<ui:define name="szalag"><div class="belep">
+		<h:form>
+			Bejelentkezés:
+			<h:inputText value="#{loginBean.dolgozokod}" /><br/>
+			<h:commandButton class="bejel" action="#{loginBean.doLogin()}" value="" style="#{trueFalseCSS.ajto()}" />
+			<h:messages globalOnly="true"/>
+		</h:form>
+	</div></ui:define>
+</ui:composition>
 </html>
