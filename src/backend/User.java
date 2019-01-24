@@ -1,3 +1,4 @@
+package backend;
 public class User {
 	private int szavazatok;
 	

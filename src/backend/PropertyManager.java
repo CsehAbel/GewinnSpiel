@@ -1,3 +1,4 @@
+package backend;
 import java.io.Serializable;
 
 import javax.faces.bean.ViewScoped;

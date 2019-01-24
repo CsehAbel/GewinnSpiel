@@ -1,25 +1,44 @@
-.belep{background-color:rgb(31,51,192);
-	width:30%;
-	height: 30%;
-	margin: 10%	 auto;
-	box-shadow: 3px 3px black;
-	border-radius: 5px;
-	border: 2px solid white;}
-input[type="text"]{width: 70%;
-	height: 30%;
-	margin: 2% 14%;
+.divbelep{
+	width: 15%;
+	height: 17%;
+	margin: 10%	 40%;
 	box-shadow: 1px 1px black;
 	border-radius: 5px;
-	font-size: 2em;}
-input[type="submit"]{
-	width: 7%;
-	height: 20%;
-	margin: 2% 14% 0% 14%;
+	border: 1px solid rgb(96,198,236);}
+.txtbejel{width: 60%;
+	height: 30%;
+	border-color:transparent;
+	background: -webkit-linear-gradient(rgb(146,216,234), rgb(90,190,223));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+	margin: 2% 3% 2% 2%;
 	box-shadow: 1px 1px black;
 	border-radius: 5px;
-	padding: 1px;}
-.bejel{
-	background-size: contain; 
+	font-size: 1.6em;
+	float:left;}
+.btnbejel{background-size: contain; 
 	background-repeat: no-repeat; 
 	background-position: center;
-}
+	border-color:transparent;
+	float: left;
+	width: 20%;
+	height: 23%;
+	margin: 2% 0% 2% 0%;
+	box-shadow: 2px 2px grey;
+	padding: 1px;}
+form{width:100%;
+	height:100%;
+	padding: 4px 4px 4px 4px;
+	color:white;
+	text-shadow: 1px 1px rgb(190,229,241);
+	font-size: 1em;}
+.spanbejel{clear: both;
+	background: -webkit-linear-gradient(rgb(146,216,234), rgb(90,190,223));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+	margin: 2% 0% 0% 2%;
+	font-size: 1.3em;
+	width: 80%;}
+.hiba{float: left;
+	clear: both;}
+.divbelep{float: left;}

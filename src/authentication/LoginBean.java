@@ -63,6 +63,7 @@ public class LoginBean implements Serializable {
 			loggedIn = false;
 			FacesMessage msg=new FacesMessage("Sikeres kijelentkezés");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			dolgozokod="";
 			return nav.toLogin();
 		}
 

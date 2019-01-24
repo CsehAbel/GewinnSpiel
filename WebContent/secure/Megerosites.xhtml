@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+	  xmlns:p="http://primefaces.org/ui" 
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="../KekSablon.xhtml">
+<ui:define name="head">
+	<h:outputStylesheet name="css/megerosites.css"></h:outputStylesheet>
+</ui:define>
+<ui:define name="szalag"> 
+	<h:form class="formvissza">
+	<h:commandButton class="vissza" action="#{navigationBean.redirectToNewFile()}" value="Vissza" />
+	</h:form>
+	<table class="containertable">
+		<tr>
+			<td>Név:</td>
+			<td>#{dbManager.u.cNev}</td></tr>
+		<tr>
+			<td>Dolgozókód:</td>
+			<td>#{dbManager.u.cDolgozokod}</td></tr>
+		<tr>
+			<td>Beosztás:</td>
+			<td>#{dbManager.u.cBeosztas}</td></tr>
+		<tr>
+			<td>Terület:</td>
+			<td>#{dbManager.u.cTerulet}</td></tr></table>
+	<div class="szjegydiv">Belépőkártya utolsó 5 számjegye</div>
+	<div class="kepdiv" style="#{trueFalseCSS.kartya()}"></div>
+	<h:form id="dForm">
+			<table>
+				<c:forEach var="j" begin="0" end="2">
+					<tr>
+						<c:forEach var="i" begin="1" end="3">
+				          <td>
+					          <h:commandButton action="#{dbManager.concks((j*3)+i)}" value="#{(j*3)+i}">
+					          	<f:ajax execute="@this" render="lblks"/></h:commandButton></td></c:forEach></tr></c:forEach>
+				<tr>
+					<td><h:commandButton action="#{dbManager.concks(0)}" value="#{0}">
+			          		<f:ajax execute="@this"  render="dForm"/> </h:commandButton> </td>
+					<td><h:commandButton action="#{dbManager.backsks()}" value="Törlés">
+			          		<f:ajax  execute="@this" render="dForm"/></h:commandButton> </td></tr></table>
+			<h:outputLabel id="lblks" value="#{dbManager.csillagks()}" /></h:form>
+			<h:messages class="hiba" globalOnly="true"/>
+</ui:define>
+</ui:composition>
+</html>

@@ -1,3 +1,4 @@
+package backend;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -53,7 +54,7 @@ public class Szavazas implements Serializable {
 		this.date1 = date1;
 	}
 	
-	public void clear(){
+	/*public void clear(){
 		dbManager.nullazas();
-	}
+	}*/
 }

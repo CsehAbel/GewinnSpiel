@@ -10,8 +10,11 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
-    <url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.jsf</url-pattern>
+ </servlet-mapping>
   <filter>
  	<filter-name>LoginFilter</filter-name>
  	<filter-class>authentication.LoginFilter</filter-class>

@@ -1,5 +1,8 @@
+package backend;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 
+import authentication.LoginBean;
 import newfile.DbManager;
 import newfile.csv;
 
@@ -9,6 +12,9 @@ public class NyitvaState implements IState {
 	
 	@EJB
 	private DbManager dbManager;
+	
+	@Inject
+	private LoginBean loginBean;
 	
 	public NyitvaState(Szavazas szavazas){
 		this.szavazas=szavazas;
@@ -33,7 +39,7 @@ public class NyitvaState implements IState {
 
 	@Override
 	public void szavaz(csv t) {
-		csv c=dbManager.findUser("55030");
+		csv c=dbManager.findUser(loginBean.getDolgozokod());
 		if(c.getSzavazat()>0){
 		c.setSzavazat(c.getSzavazat()-1);
 		//SET oszlophoz hozzáadás

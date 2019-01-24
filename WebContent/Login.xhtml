@@ -8,14 +8,15 @@
 
 <ui:composition template="KekSablon.xhtml">
 <ui:define name="head">
-<h:outputScript name="css/login.css"></h:outputScript>
+<h:outputStylesheet name="css/login.css"/>
 </ui:define>
-<ui:define name="szalag"><div class="belep">
+<ui:define name="szalag">
+	<div class="divbelep">
 		<h:form>
-			Bejelentkezés:
-			<h:inputText value="#{loginBean.dolgozokod}" /><br/>
-			<h:commandButton class="bejel" action="#{loginBean.doLogin()}" value="" style="#{trueFalseCSS.ajto()}" />
-			<h:messages globalOnly="true"/>
+			<span class="spanbejel">Bejelentkezés:</span>
+			<h:inputText class="txtbejel" value="#{loginBean.dolgozokod}" />
+			<h:commandButton class="btnbejel" action="#{loginBean.doLogin()}" value="" style="#{trueFalseCSS.ajto()}" />
+			<h:messages class="hiba" globalOnly="true"/>
 		</h:form>
 	</div></ui:define>
 </ui:composition>

@@ -3,6 +3,7 @@
 	<persistence-unit name="Szavazas">
 		<jta-data-source>java:jboss/datasources/mysql</jta-data-source>
 		<class>authentication.User</class>
+		<class>megerosites.xsw</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.show_sql" value="true"/>

@@ -1,3 +1,4 @@
+package backend;
 import newfile.csv;
 
 public class ZarvaState implements IState {
@@ -12,7 +13,6 @@ public class ZarvaState implements IState {
 	public void nyit() {
 		// TODO Auto-generated method stub
 		this.szavazas.changeState(new NyitvaState(this.szavazas));
-		this.szavazas.clear();
 	}
 
 	@Override

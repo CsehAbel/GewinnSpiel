@@ -31,5 +31,26 @@ public class TrueFalseCSS implements Serializable {
 		String url = context.getApplication().evaluateExpressionGet(context, "#{resource['css:ajto.png']}", String.class);
 		return String.format(stilus, "background-image: url(\""+url+"\");");
 	}
+	
+	public String exit(){
+		String stilus="%s";
+		FacesContext context = FacesContext.getCurrentInstance();
+		String url = context.getApplication().evaluateExpressionGet(context, "#{resource['css:exit.png']}", String.class);
+		return String.format(stilus, "background-image: url(\""+url+"\");");
+	}
+	
+	public String kartya(){
+		String stilus="%s";
+		FacesContext context = FacesContext.getCurrentInstance();
+		String url = context.getApplication().evaluateExpressionGet(context, "#{resource['css:kartya.png']}", String.class);
+		return String.format(stilus, "background-image: url(\""+url+"\");");
+	}
+	
+	public String cdr(){
+		String stilus="%s";
+		FacesContext context = FacesContext.getCurrentInstance();
+		String url = context.getApplication().evaluateExpressionGet(context, "#{resource['css:zalogo.png']}", String.class);
+		return String.format(stilus, "background-image: url(\""+url+"\");");
+	}
 
 }

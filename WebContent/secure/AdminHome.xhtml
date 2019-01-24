@@ -5,18 +5,21 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
-						<h:form><div>#{loginBean.nev} bejelentkezve</div>
-						<div><h:commandLink action="#{loginBean.doLogout()}" value="Kijelentkezés" /></div>
-						</h:form>
+<ui:composition template="../KekSablon.xhtml">
+<ui:define name="head">
+<h:outputStylesheet name="css/adminhome.css"/>
+</ui:define>
+<ui:define name="szalag">
+	<!-- 
 	<h:form enctype="multipart/form-data">
 	    <h:inputFile value="#{Csv.file}">
 	        <f:ajax listener="#{Csv.save}" />
 	    </h:inputFile>
 	</h:form>
+	-->
 	<div>A böngésző megnyitásaskor, váltáskor alaphelyzetbe áll, pontosabban sessiononként.</div>
-	<div style="border: 1px solid black; float: left">
+	<div>
+		<!-- 
 		<h:form>
 		  <p:calendar id="naptar" mode="inline" value="#{szavazas.date1}" />
 		  <div>Szavazatot dátum megadásával megnyitva, megadható a lezárulás időpontja</div>
@@ -24,7 +27,8 @@
 		  <div>#{szavazas.IState}</div>
 		  <h:commandButton value="Zárás" action="#{szavazas.requestZar()}"/>
 		  <span>A szavazást manuálisan is le lehet állítani</span>
-		</h:form>
+		</h:form> 
+		-->
 	</div>
 	<h:form>
 		<div>Eredményhirdetés:</div>
@@ -41,6 +45,11 @@
 			</p:dataTable>
 	    </div>
 	</h:form>
-
-</body> 
+	<div id="kamugombok" style="color: white; text-shadow: 2px 2px black; position: absolute; bottom: 20px;">
+	<span>10 pont hozzáadása  </span><h:commandButton value="10 pont"></h:commandButton><br></br>
+	<span>Excel riport letöltése  </span><h:commandButton value="Pontszám szerint"></h:commandButton><br></br>
+	<span>Excel riport letöltése  </span><h:commandButton value="Ki kire szavazott"></h:commandButton><br></br>
+	</div>
+</ui:define>
+</ui:composition> 
 </html>

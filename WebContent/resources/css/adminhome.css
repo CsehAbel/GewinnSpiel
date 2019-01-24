@@ -1,0 +1,11 @@
+form{
+	height: 50%;
+	width: 60%;
+}
+
+#kamugombok{
+	float: left;
+	width: 30%;
+	height: 20%;
+	font-size: 1.3em;
+}

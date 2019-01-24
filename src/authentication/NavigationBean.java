@@ -22,8 +22,8 @@ public class NavigationBean implements Serializable {
 		return "/secure/AdminHome.jsf?faces-redirect=true";
 	}
 	
-	/*public String redirectToRecept(){
-		return "/korlatozott/ReceptIn.jpg?faces-redirect=true";
-	}*/
+	public String redirectToMegerosites(){
+		return "/secure/Megerosites.jsf?faces-redirect=true";
+	}
 
 }

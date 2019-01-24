@@ -1,0 +1,34 @@
+#cForm{
+	width: 20%;
+	height: 20%;
+	float: left;
+	position: absolute;
+	top: 2%;
+	right: 2%;
+}
+.somForm,.somForm2{
+	width: 30%;
+	float:left;
+}
+
+.somForm > select,.somForm2 > select{
+	width: 100%;
+	font-size: 1.7em;
+}
+#tablazat{
+	float:left;
+	clear: left;
+	width: 77%;
+}
+
+table, table > tbody, table > tbody > tr > td > input{
+	width: 100%;
+	height: 100%;
+}
+table > tbody > tr > td{
+	width: 20%;
+	height: 100%;
+}
+.ui-datagrid-content {
+	border: none;
+}
