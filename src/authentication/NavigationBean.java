@@ -25,5 +25,8 @@ public class NavigationBean implements Serializable {
 	public String redirectToMegerosites(){
 		return "/secure/Megerosites.jsf?faces-redirect=true";
 	}
-
+	
+	public String redirectToFilterABC(){
+		return "/FilterABC.jsf";
+	}
 }

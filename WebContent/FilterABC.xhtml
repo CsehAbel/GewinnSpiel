@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="KekSablon.xhtml">
+	<ui:define name="szalag">
+	
+		<script>
+	    function foo(element) {
+	        var $element = $(element);
+	        return $element.children(0).text();
+	    }
+		</script>
+		
+		<h:form id="tablazat">
+			<p:dataTable id="dtable" var="u" value="#{dbManager.userek}"  widgetVar="userTable">
+				<p:ajax event="filter" listener="#{dbManager.onFilter}" update="@all"/>
+				
+				<f:facet name="header">
+					<ui:repeat var="betu" value="#{dbManager.abc}">
+					<p:commandButton  value="#{betu}" onclick="$('#tablazat\\:dtable\\:col_filter').val(foo(this)),PF('userTable').filter()">
+					</p:commandButton>
+					</ui:repeat>
+		        </f:facet>
+		        
+		        <p:column id="col" filterBy="#{u.cNev}">
+		        <f:facet name="filter">
+		        	<p:inputText id="col_filter" style="visibility:hidden;"/>
+		        </f:facet>
+		          <h:outputText value="#{u.cNev}" />
+		        </p:column>
+		        
+		         <p:column>
+		          <h:outputText value="#{u.cDolgozokod}" />
+		        </p:column>
+			</p:dataTable>
+			<p:dataTable id="dtable2" var="k" value="#{dbManager.userekFiltered}">
+			    <p:column>
+				          <h:outputText value="#{k.cNev}" />
+				</p:column>
+			    <p:column>
+				          <h:outputText value="#{k.cDolgozokod}" />
+				</p:column>
+	    	</p:dataTable>
+	    </h:form>
+	    
+	</ui:define>
+	</ui:composition>
+</html>

@@ -1,12 +1,20 @@
 package newfile;
 
+import java.text.Collator;
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +28,8 @@ import megerosites.xsw;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
+import org.primefaces.component.datatable.DataTable;
 
 @Named
 @Stateless
@@ -40,7 +50,10 @@ public class DbManager {
 	
 	private String ks;
 	
+	//private String betu;
+	
 	public List<csv> userek;
+	public List<csv> userekFiltered;
 	
 	private csv u;
 	
@@ -50,6 +63,25 @@ public class DbManager {
 	public void init(){
 		d="";
 		ks="";
+		userek=allUser();
+	}
+	
+	/*public boolean filterABC(Object value, Object filter, Locale locale) {
+		System.out.println("filterABC");
+        String filterText = (filter == null) ? null : filter.toString().trim();
+        if(filterText == null||filterText.equals("")) {
+            return true;
+        }
+         
+        if(value == null) {
+            return false;
+        }
+        return value.toString().matches("^"+betu+".*");
+    }*/
+	
+	public void userekuserekFiltered(){
+		System.out.println("userek: "+userek.size());
+		System.out.println("userekFiltered: "+userekFiltered.size());
 	}
 	
 	public csv findUser(String dolgozokod){
@@ -78,7 +110,7 @@ public class DbManager {
 	
 	public List<csv> allUser(){
 		Query query;
-		query=em.createQuery("FROM csv AS c WHERE c.kapott>0 ORDER BY c.kapott");
+		query=em.createQuery("FROM csv AS c");
 		return (List<csv>) query.getResultList();
 	}
 	
@@ -236,6 +268,26 @@ public class DbManager {
 		else{ return null;}
 	}
 	
+	//különbözõ kezdõbetûket összegyûjti
+	public List<String> getAbc() {
+		Set<String> hashSet=new HashSet<>();
+		for(csv u:userek){
+			hashSet.add(u.getcNev().substring(0,1));
+		}
+		List<String> abc=new ArrayList<>(hashSet);
+		
+		Collator huCollator = Collator.getInstance(new Locale("hu", "HU")); //Your locale here
+		huCollator.setStrength(Collator.PRIMARY); //desired strength
+		Collections.sort(abc, huCollator);
+		return abc;
+	}
+	
+	public void onFilter(AjaxBehaviorEvent event) {
+	       DataTable table = (DataTable) event.getSource();
+	       List<csv> obj =   table.getFilteredValue();
+	       userekFiltered = obj;
+	}
+
 	public List<String> getBeosztasokNemSelectItem(){
 		if(t!=null){
 			Query query= em.createNativeQuery("SELECT DISTINCT k.cBeosztas FROM csv k where cTerulet = :pT");
@@ -261,6 +313,22 @@ public class DbManager {
 	public void setUserek(List<csv> userek) {
 		this.userek = userek;
 	}
+
+	public List<csv> getUserekFiltered() {
+		return userekFiltered;
+	}
+
+	public void setUserekFiltered(List<csv> userekFiltered) {
+		this.userekFiltered = userekFiltered;
+	}
+
+	/*public String getBetu() {
+		return betu;
+	}
+
+	public void setBetu(String betu) {
+		this.betu = betu;
+	}*/
 
 	public String getT() {
 		return t;
