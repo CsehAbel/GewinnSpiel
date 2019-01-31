@@ -1,11 +1,4 @@
-USE lokalis;
-#SET GLOBAL general_log = 'ON';
-#DROP TABLE IF EXISTS pontok;
-CREATE TABLE pontok(
-	adoszam VARCHAR(40) PRIMARY KEY NOT NULL,
-    kapott int NOT NULL DEFAULT 0,
-    szavazat int NOT NULL DEFAULT 0
-);
+
 
 #DROP TABLE IF EXISTS dolgozo;
 CREATE TABLE dolgozo(
@@ -48,12 +41,13 @@ INSERT INTO dolgozo_duplicate VALUES(1,1,1,1,1);
 INSERT INTO dolgozo_duplicate VALUES(2,1,1,1,1);
 SELECT * FROM dolgozo;
 SELECT * FROM dolgozo_replace;
-SELECT * FROM dolgozo_duplicate;
+SELECT * FROM dolgozo_duplicate WHERE adoszam=8473290267;
 #TRUNCATE TABLE dolgozo;
 #TRUNCATE TABLE dolgozo_duplicate;
 #TRUNCATE TABLE dolgozo_replace;
 #TRUNCATE TABLE pontok;
 
+/*TURNCATE dolgozo,dolgozo_replace,dolgozo_duplicat egy tárol eljárást meghívni az mssql anonymous tárolt eljárás előtt*/
 /*JAVA ból meg kell hívni hogy kitöröljük időről időre*/
 DROP PROCEDURE IF EXISTS torol_dolgozo_duplicate;
 delimiter //
