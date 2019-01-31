@@ -53,7 +53,7 @@ public class DbManager {
 	//private String betu;
 	
 	public List<csv> userek;
-	public List<csv> userekFiltered;
+	public List<csv> userekNotFiltered;
 	
 	private csv u;
 	
@@ -64,6 +64,19 @@ public class DbManager {
 		d="";
 		ks="";
 		userek=allUser();
+		userekNotFiltered=userek;
+	}
+	
+	public void szures(String betu){
+		userek=userekNotFiltered;
+		List<csv> uj=new ArrayList<>();
+		for(csv c:userek){
+			if(c.getcNev().substring(0, 1).equals(betu)){
+				uj.add(c);
+			}
+		}
+		userekNotFiltered=userek;
+		userek=uj;
 	}
 	
 	/*public boolean filterABC(Object value, Object filter, Locale locale) {
@@ -78,11 +91,6 @@ public class DbManager {
         }
         return value.toString().matches("^"+betu+".*");
     }*/
-	
-	public void userekuserekFiltered(){
-		System.out.println("userek: "+userek.size());
-		System.out.println("userekFiltered: "+userekFiltered.size());
-	}
 	
 	public csv findUser(String dolgozokod){
 		csv c=null;
@@ -203,6 +211,7 @@ public class DbManager {
 			list= (List<csv>) query.getResultList();
 		}
 		userek=list;
+		userekNotFiltered=list;
 		b=null;
 	}
 	
@@ -216,6 +225,7 @@ public class DbManager {
 			query.setParameter("b", b);
 			List<csv> list= (List<csv>) query.getResultList();
 			userek=list;
+			userekNotFiltered=list;
 		} else{
 			userek=new ArrayList<>();
 		}
@@ -281,12 +291,6 @@ public class DbManager {
 		Collections.sort(abc, huCollator);
 		return abc;
 	}
-	
-	public void onFilter(AjaxBehaviorEvent event) {
-	       DataTable table = (DataTable) event.getSource();
-	       List<csv> obj =   table.getFilteredValue();
-	       userekFiltered = obj;
-	}
 
 	public List<String> getBeosztasokNemSelectItem(){
 		if(t!=null){
@@ -314,12 +318,12 @@ public class DbManager {
 		this.userek = userek;
 	}
 
-	public List<csv> getUserekFiltered() {
-		return userekFiltered;
+	public List<csv> getUserekNotFiltered() {
+		return userekNotFiltered;
 	}
 
-	public void setUserekFiltered(List<csv> userekFiltered) {
-		this.userekFiltered = userekFiltered;
+	public void setUserekNotFiltered(List<csv> userekNotFiltered) {
+		this.userekNotFiltered = userekNotFiltered;
 	}
 
 	/*public String getBetu() {

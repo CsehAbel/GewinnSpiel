@@ -28,10 +28,14 @@
 		</h:form>
 		
 		<h:form id="tablazat">
-			<p:dataGrid value="#{dbManager.userek}" var="u" paginator="true" columns="4" rows="28" layout="grid" styleClass=".ui-datagrid-content" paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}">
+			<p:dataGrid value="#{dbManager.userek}" var="u" columns="4" rows="28" layout="grid" styleClass=".ui-datagrid-content">
 		        <f:facet name="header">
-		            Kire szavazna?
+					<ui:repeat var="betu" value="#{dbManager.abc}">
+					<p:commandButton  value="#{betu}" onclick="#{dbManager.szures('A')}">
+					</p:commandButton>
+					</ui:repeat>
 		        </f:facet>
+		        
 		        <p:commandButton value="#{u.cNev} , #{u.cDolgozokod}"  action="#{navigationBean.redirectToMegerosites()}">
 		        	<f:setPropertyActionListener value="#{u}" target="#{dbManager.u}" />
 		        </p:commandButton>
@@ -57,12 +61,11 @@
 			            </h:commandButton> </td>
 					<td><h:commandButton action="#{dbManager.backsd()}" value="Törlés">
 			          		<f:ajax  execute="@this" render="cForm tablazat"/>
-			            </h:commandButton> </td>
+			            </h:commandButton></td>
 				</tr>
 			</table>
 			<label id="lbld">#{dbManager.d}</label>
 		</h:form>
-		
 </ui:define>
 </ui:composition>
 </html>
