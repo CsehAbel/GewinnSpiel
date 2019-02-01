@@ -33,26 +33,29 @@ begin
 	if (new.torzsszam in (SELECT torzsszam FROM dolgozo)) THEN
 		INSERT INTO dolgozo_replace SELECT adoszam,now() FROM dolgozo WHERE new.torzsszam=torzsszam;
 	end if;
-    REPLACE INTO dolgozo VALUES(new.adoszam,new.torzsszam,new.nev,new.uzemegyseg,new.munkakor);
+    INSERT IGNORE INTO dolgozo VALUES(new.adoszam,new.torzsszam,new.nev,new.uzemegyseg,new.munkakor);
 end; $$
 
-
+/*
 INSERT INTO dolgozo_duplicate VALUES(1,1,1,1,1);
 INSERT INTO dolgozo_duplicate VALUES(2,1,1,1,1);
 SELECT * FROM dolgozo;
 SELECT * FROM dolgozo_replace;
-SELECT * FROM dolgozo_duplicate WHERE adoszam=8473290267;
+SELECT * FROM dolgozo_duplicate WHERE adoszam=8473290267;*/
+
 #TRUNCATE TABLE dolgozo;
 #TRUNCATE TABLE dolgozo_duplicate;
 #TRUNCATE TABLE dolgozo_replace;
 #TRUNCATE TABLE pontok;
 
-/*TURNCATE dolgozo,dolgozo_replace,dolgozo_duplicat egy tárol eljárást meghívni az mssql anonymous tárolt eljárás előtt*/
+/*TRUNCATE dolgozo,dolgozo_replace,dolgozo_duplicate egy tárol eljárást meghívni az mssql anonymous tárolt eljárás előtt*/
 /*JAVA ból meg kell hívni hogy kitöröljük időről időre*/
 DROP PROCEDURE IF EXISTS torol_dolgozo_duplicate;
 delimiter //
 CREATE PROCEDURE torol_dolgozo_duplicate ()
 BEGIN
+ TRUNCATE TABLE  dolgozo;
  TRUNCATE TABLE dolgozo_duplicate;
-END;
-//
+ TRUNCATE TABLe dolgozo_replace;
+END//
+delimiter ;
