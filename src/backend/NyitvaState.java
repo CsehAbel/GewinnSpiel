@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import authentication.LoginBean;
 import newfile.DbManager;
-import newfile.csv;
 
 public class NyitvaState implements IState {
 	

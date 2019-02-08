@@ -27,21 +27,40 @@
 			</h:selectOneMenu>
 		</h:form>
 		
+		<script>
+	    function foo(element) {
+	        var $element = $(element);
+	        return $element.children(0).text();
+	    }
+		</script>
+		
 		<h:form id="tablazat">
-			<p:dataGrid value="#{dbManager.userek}" var="u" columns="4" rows="28" layout="grid" styleClass=".ui-datagrid-content">
-		        <f:facet name="header">
+			<p:dataTable id="dtable" var="u" value="#{dbManager.userek}"  widgetVar="userTable">
+				<p:ajax event="filter"  update="@all"/>
+				
+				<f:facet name="header">
 					<ui:repeat var="betu" value="#{dbManager.abc}">
-					<p:commandButton  value="#{betu}" onclick="#{dbManager.szures('A')}">
+					<p:commandButton  value="#{betu}" onclick="$('#tablazat\\:dtable\\:col_filter').val(foo(this)),PF('userTable').filter()">
 					</p:commandButton>
 					</ui:repeat>
+					<p:commandButton value="Mindenki" action="#{navigationBean.redirectToNewFile()}"></p:commandButton>
 		        </f:facet>
 		        
-		        <p:commandButton value="#{u.cNev} , #{u.cDolgozokod}"  action="#{navigationBean.redirectToMegerosites()}">
+		        <p:column id="col" filterBy="#{u.nev}">
+		        <f:facet name="filter">
+		        	<p:inputText id="col_filter" style="visibility:hidden;"/>
+		        </f:facet>
+		          <p:commandButton value="#{u.nev}"  action="#{navigationBean.redirectToMegerosites()}">
 		        	<f:setPropertyActionListener value="#{u}" target="#{dbManager.u}" />
-		        </p:commandButton>
-		    </p:dataGrid>
+	          	  </p:commandButton>
+		        </p:column>
+		        
+		         <p:column>
+		          <h:outputText value="#{u.torzsszam}" />
+		        </p:column>
+			</p:dataTable>
 	    </h:form>
-	    
+	   
 	    <h:form id="cForm">
 			<table>
 				<c:forEach var="j" begin="0" end="2">

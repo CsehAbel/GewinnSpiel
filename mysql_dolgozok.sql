@@ -1,12 +1,13 @@
 
 
-#DROP TABLE IF EXISTS dolgozo;
+DROP TABLE IF EXISTS dolgozo;
 CREATE TABLE dolgozo(
 	adoszam VARCHAR(40) NOT NULL,
     torzsszam varchar(40)  PRIMARY KEY,
     nev varchar(250),
     uzemegyseg varchar(40),
-    munkakor varchar(250)
+    munkakor varchar(250),
+    adminn int DEFAULT 0
 );
 
 CREATE TABLE dolgozo_duplicate(
@@ -33,7 +34,7 @@ begin
 	if (new.torzsszam in (SELECT torzsszam FROM dolgozo)) THEN
 		INSERT INTO dolgozo_replace SELECT adoszam,now() FROM dolgozo WHERE new.torzsszam=torzsszam;
 	end if;
-    INSERT IGNORE INTO dolgozo VALUES(new.adoszam,new.torzsszam,new.nev,new.uzemegyseg,new.munkakor);
+    INSERT IGNORE INTO dolgozo(adoszam,torzsszam,nev,uzemegyseg,munkakor) VALUES(new.adoszam,new.torzsszam,new.nev,new.uzemegyseg,new.munkakor);
 end; $$
 
 /*
@@ -54,7 +55,6 @@ DROP PROCEDURE IF EXISTS torol_dolgozo_duplicate;
 delimiter //
 CREATE PROCEDURE torol_dolgozo_duplicate ()
 BEGIN
- TRUNCATE TABLE  dolgozo;
  TRUNCATE TABLE dolgozo_duplicate;
  TRUNCATE TABLe dolgozo_replace;
 END//

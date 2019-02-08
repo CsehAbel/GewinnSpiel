@@ -13,15 +13,6 @@ CREATE TABLE pontok_duplicate(
     szavazat int NOT NULL DEFAULT 0
 );
 
-DROP PROCEDURE IF EXISTS delete_pontok_duplicate;
-/*pontok_duplicate törlése*/
-delimiter //
-CREATE PROCEDURE delete_pontok_duplicate()
-BEGIN
-	TRUNCATE TABLE pontok_duplicate;
-END//
-DELIMITER ;
-
 /*
 DROP TRIGGER IF EXISTS ignr_meglevo_adoszam;
  */
@@ -37,7 +28,7 @@ delimiter ;
 SELECT * FROM pontok_duplicate;
 SELECT * FROM pontok;
 
-/*DROP PROCEDURE truncate_pontok;*/
+/*DROP PROCEDURE IF EXISTS truncate_pontok;*/
 DELIMITER //
 CREATE PROCEDURE truncate_pontok_duplicate()
 BEGIN

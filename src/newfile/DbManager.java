@@ -1,10 +1,8 @@
 package newfile;
 
 import java.text.Collator;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -14,22 +12,20 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Query;
 
+import authentication.Dolgozo;
 import authentication.LoginBean;
-import authentication.User;
+import backend.Pontok;
 import backend.Szavazas;
-import megerosites.xsw;
+import megerosites.Xsw;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import org.primefaces.component.datatable.DataTable;
 
 @Named
 @Stateless
@@ -41,8 +37,8 @@ public class DbManager {
 	@Inject
 	private LoginBean loginBean;
 	
-	@Inject
-	private Szavazas szavazas;
+	/*@Inject
+	private Szavazas szavazas;*/
 	
 	private String t;
 	
@@ -52,10 +48,9 @@ public class DbManager {
 	
 	//private String betu;
 	
-	public List<csv> userek;
-	public List<csv> userekNotFiltered;
+	public List<Dolgozo> userek;
 	
-	private csv u;
+	private Dolgozo u;
 	
 	private String d;
 	
@@ -63,80 +58,67 @@ public class DbManager {
 	public void init(){
 		d="";
 		ks="";
-		userek=allUser();
-		userekNotFiltered=userek;
+		userek=allDolgozo();
 	}
 	
-	public void szures(String betu){
-		userek=userekNotFiltered;
-		List<csv> uj=new ArrayList<>();
-		for(csv c:userek){
-			if(c.getcNev().substring(0, 1).equals(betu)){
-				uj.add(c);
-			}
-		}
-		userekNotFiltered=userek;
-		userek=uj;
-	}
-	
-	/*public boolean filterABC(Object value, Object filter, Locale locale) {
-		System.out.println("filterABC");
-        String filterText = (filter == null) ? null : filter.toString().trim();
-        if(filterText == null||filterText.equals("")) {
-            return true;
-        }
-         
-        if(value == null) {
-            return false;
-        }
-        return value.toString().matches("^"+betu+".*");
-    }*/
-	
-	public csv findUser(String dolgozokod){
-		csv c=null;
+	public Dolgozo findDolgozo(String dolgozokod){
+		Dolgozo d=null;
 		Query query;
-		query=em.createQuery("FROM csv c WHERE c.cDolgozokod = :k");
+		query=em.createQuery("FROM Dolgozo d WHERE d.torzsszam LIKE :k");
 		query.setParameter("k", dolgozokod);
-		try{c=(csv) query.getSingleResult();
+		try{d=(Dolgozo) query.getSingleResult();
 		}catch(NoResultException ex){
 			System.out.println("nincs dolgozókód");
 		}
-		return c;
+		return d;
 	}
-	public xsw findXsw(){
-		xsw c=null;
+	
+	public Pontok findPontok(String adoszam){
+		Pontok d=null;
 		Query query;
-		query=em.createQuery("FROM xsw x WHERE x.xKartyaszam = :x");
+		query=em.createQuery("FROM Pontok d WHERE d.pontok LIKE :k");
+		query.setParameter("k", adoszam);
+		try{d=(Pontok) query.getSingleResult();
+		}catch(NoResultException ex){
+			System.out.println("nincs xsw");
+		}
+		return d;
+	}
+	
+	public Xsw findXsw(){
+		Xsw c=null;
+		Query query;
+		query=em.createQuery("FROM Xsw x WHERE x.kartyaszam = :x");
 		query.setParameter("x", Integer.parseInt(ks));
-		try{c=(xsw)query.getSingleResult();
-		System.out.println("xsw:"+c.getxDolgozokod());
+		try{c=(Xsw)query.getSingleResult();
+		System.out.println("xsw:"+c.getDolgozokod());
 		}catch(NoResultException ex){
 			System.out.println(ks+" xsw nem talált.");
 		}
 		return c;
 	}
 	
-	public List<csv> allUser(){
+	public List<Dolgozo> allDolgozo(){
 		Query query;
-		query=em.createQuery("FROM csv AS c");
-		return (List<csv>) query.getResultList();
+		query=em.createQuery("FROM Dolgozo AS d");
+		return (List<Dolgozo>) query.getResultList();
 	}
 	
-	public void updateKapott(int kapId){
-		csv kap=em.find(csv.class,kapId);
+	public void updateKapott(String adoszam){
+		Pontok kap=findPontok(adoszam);
 		kap.setKapott(kap.getKapott()+1);
-		FacesMessage msg=new FacesMessage(kap.getcNev()+","+kap.getcDolgozokod()+" pontot kapott.", "Kapott");
+		/*FacesMessage msg=new FacesMessage(kap.getcNev()+","+kap.getcDolgozokod()+" pontot kapott.", "Kapott");
 		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage(null, msg);*/
 		em.merge(kap);
 	}
 	
-	public void updateSzavazat(int veszitId){
-		csv veszit=em.find(csv.class, veszitId);
+	public void updateSzavazat(String adoszam){
+		Pontok veszit=findPontok(adoszam);
 		veszit.setSzavazat(veszit.getSzavazat()-1);
-		FacesMessage msg=new FacesMessage(veszit.getcNev()+","+veszit.getcDolgozokod()+" pontot veszített.", "Veszített");
+		/*FacesMessage msg=new FacesMessage(veszit.getcNev()+","+veszit.getcDolgozokod()+" pontot veszített.", "Veszített");
 		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage(null, msg);*/
 		em.merge(veszit);
 	}
 	
@@ -144,9 +126,9 @@ public class DbManager {
 		d=""+d+""+i;
 		System.out.println("d:"+d);
 		if(d.length()==5){
-			if(findUser(d)!=null){
+			if(findDolgozo(d)!=null){
 				userek=new ArrayList<>();
-				userek.add(findUser(d));
+				userek.add(findDolgozo(d));
 			} else{
 				FacesMessage msg=new FacesMessage("Nincs ilyen kód!");
 				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -160,14 +142,14 @@ public class DbManager {
 		ks=""+ks+""+i;
 		System.out.println("ks:"+ks);
 		if(ks.length()==5){
-			xsw xsw1=findXsw();
-			if(xsw1!=null && xsw1.getxDolgozokod()==Integer.parseInt(loginBean.getDolgozokod()) ){
-				System.out.println("if(xsw1!=null && xsw1.getxDolgozokod()==Integer.parseInt(loginBean.getDolgozokod()) ){");
-				csv veszit=findUser(loginBean.getDolgozokod());
+			Xsw xsw1=findXsw();
+			if(xsw1!=null && Integer.parseInt(xsw1.getDolgozokod())==Integer.parseInt(loginBean.getDolgozokod()) ){
+				
+				Pontok veszit=findPontok(findDolgozo(loginBean.getDolgozokod()).getAdoszam());
 				if(veszit.getSzavazat()>0){
 					System.out.println("if(veszit.getSzavazat()>0)");
-					updateKapott(u.getcId());
-					updateSzavazat(veszit.getcId());
+					updateKapott(u.getAdoszam());
+					updateSzavazat(veszit.getAdoszam());
 				} else{
 					System.out.println("1} else{");
 					FacesMessage msg=new FacesMessage("Nincs több adható szavazat!", "Nincs pont");
@@ -201,17 +183,16 @@ public class DbManager {
 	public void valaszt(){
 		System.out.println("valaszt");
 		Query query;
-		query = em.createQuery("FROM csv AS c where c.cTerulet = :t ORDER BY c.cNev");
-		List<csv> list=new ArrayList<>();
+		query = em.createQuery("FROM Dolgozo AS d where d.uzemegyseg = :t ORDER BY d.nev");
+		List<Dolgozo> list=new ArrayList<>();
 		if(t!=null){
 			query.setParameter("t", t);
-			list= (List<csv>) query.getResultList();	
+			list= (List<Dolgozo>) query.getResultList();	
 		} else {
 			query.setParameter("t", getTeruletekNemSelectItem().get(0));
-			list= (List<csv>) query.getResultList();
+			list= (List<Dolgozo>) query.getResultList();
 		}
 		userek=list;
-		userekNotFiltered=list;
 		b=null;
 	}
 	
@@ -219,13 +200,12 @@ public class DbManager {
 		if(b!=null){
 		System.out.println("bvalaszt");
 		Query query;
-		query = em.createQuery("FROM csv AS c where c.cTerulet = :t AND c.cBeosztas = :b ORDER BY c.cNev");
+		query = em.createQuery("FROM Dolgozo AS d where d.uzemegyseg = :t AND d.munkakor = :b ORDER BY d.nev");
 		if(t!=null){
 			query.setParameter("t", t);
 			query.setParameter("b", b);
-			List<csv> list= (List<csv>) query.getResultList();
+			List<Dolgozo> list= (List<Dolgozo>) query.getResultList();
 			userek=list;
-			userekNotFiltered=list;
 		} else{
 			userek=new ArrayList<>();
 		}
@@ -256,7 +236,7 @@ public class DbManager {
 		
 	public List<SelectItem> getTeruletek(){
 		
-		Query query= em.createNativeQuery("SELECT DISTINCT k.cTerulet FROM csv k");
+		Query query= em.createNativeQuery("SELECT DISTINCT d.uzemegyseg FROM Dolgozo d");
 		List<String> list = (List<String>) query.getResultList();
 		List<SelectItem> si=new ArrayList<SelectItem>();
 		for(String s:list){
@@ -267,7 +247,7 @@ public class DbManager {
 	
 	public List<SelectItem> getBeosztasok(){
 		if(t!=null){
-		Query query= em.createNativeQuery("SELECT DISTINCT k.cBeosztas FROM csv k where cTerulet = :pT");
+		Query query= em.createNativeQuery("SELECT DISTINCT d.munkakor FROM Dolgozo d where uzemegyseg = :pT");
 		query.setParameter("pT",t);
 		List<String> list = (List<String>) query.getResultList();
 		List<SelectItem> si=new ArrayList<SelectItem>();
@@ -281,8 +261,8 @@ public class DbManager {
 	//különbözõ kezdõbetûket összegyûjti
 	public List<String> getAbc() {
 		Set<String> hashSet=new HashSet<>();
-		for(csv u:userek){
-			hashSet.add(u.getcNev().substring(0,1));
+		for(Dolgozo u:userek){
+			hashSet.add(u.getNev().substring(0,1));
 		}
 		List<String> abc=new ArrayList<>(hashSet);
 		
@@ -294,7 +274,7 @@ public class DbManager {
 
 	public List<String> getBeosztasokNemSelectItem(){
 		if(t!=null){
-			Query query= em.createNativeQuery("SELECT DISTINCT k.cBeosztas FROM csv k where cTerulet = :pT");
+			Query query= em.createNativeQuery("SELECT DISTINCT d.munkakor FROM Dolgozo d where uzemegyseg = :pT");
 			query.setParameter("pT",t);
 			List<String> list = (List<String>) query.getResultList();
 			return list;
@@ -305,26 +285,10 @@ public class DbManager {
 	
 	public List<String> getTeruletekNemSelectItem(){
 			
-			Query query= em.createNativeQuery("SELECT DISTINCT k.cTerulet FROM csv k");
+			Query query= em.createNativeQuery("SELECT DISTINCT d.uzemegyseg FROM Dolgozo d");
 			List<String> list = (List<String>) query.getResultList();
 			return list;
 		}
-
-	public List<csv> getUserek() {
-		return userek;
-	}
-
-	public void setUserek(List<csv> userek) {
-		this.userek = userek;
-	}
-
-	public List<csv> getUserekNotFiltered() {
-		return userekNotFiltered;
-	}
-
-	public void setUserekNotFiltered(List<csv> userekNotFiltered) {
-		this.userekNotFiltered = userekNotFiltered;
-	}
 
 	/*public String getBetu() {
 		return betu;
@@ -333,6 +297,14 @@ public class DbManager {
 	public void setBetu(String betu) {
 		this.betu = betu;
 	}*/
+
+	public List<Dolgozo> getUserek() {
+		return userek;
+	}
+
+	public void setUserek(List<Dolgozo> userek) {
+		this.userek = userek;
+	}
 
 	public String getT() {
 		return t;
@@ -350,11 +322,11 @@ public class DbManager {
 		this.b = b;
 	}
 
-	public csv getU() {
+	public Dolgozo getU() {
 		return u;
 	}
 
-	public void setU(csv u) {
+	public void setU(Dolgozo u) {
 		this.u = u;
 	}
 

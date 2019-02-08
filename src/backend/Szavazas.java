@@ -4,8 +4,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import newfile.DbManager;
-import newfile.csv;
-
 import java.io.Serializable;
 import java.util.Date;
 

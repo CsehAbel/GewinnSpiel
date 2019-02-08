@@ -22,6 +22,7 @@ public class LoginBean implements Serializable {
 		private DbManager dm;
 
 		private String dolgozokod;
+		
 		private String nev;
 		
 		private boolean loggedIn;
@@ -32,11 +33,14 @@ public class LoginBean implements Serializable {
 		private NavigationBean nav;
 		
 		public String doLogin(){
-			csv user=dm.findUser(dolgozokod);
-			if(user!=null){ //&&this.Pass.equals(pass)){
-					nev=user.getcNev();
+			if(dolgozokod.matches("[zZ][0-9]{5}")){
+				dolgozokod=dolgozokod.substring(1);
+			}
+			Dolgozo dolgozo=dm.findDolgozo(dolgozokod);
+			if(dolgozo!=null){ //&&this.Pass.equals(pass)){
+					nev=dolgozo.getNev();
 					loggedIn=true;
-					if(user.getAdminn()==1){
+					if(dolgozo.getAdmin()==1){
 						this.admin=true;
 						return nav.redirectToAdmin();
 					} 

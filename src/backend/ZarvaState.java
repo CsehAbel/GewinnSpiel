@@ -1,5 +1,4 @@
 package backend;
-import newfile.csv;
 
 public class ZarvaState implements IState {
 	

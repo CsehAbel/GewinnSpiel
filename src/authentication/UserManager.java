@@ -10,14 +10,14 @@ public class UserManager {
 	@PersistenceContext(unitName="Szavazas")
 	private EntityManager em;
 	
-	public User getUser(String dolgozokod){
-		User u=null;
+	public Dolgozo getDolgozo(String dolgozokod){
+		Dolgozo d=null;
 		try{
-		u=em.createNamedQuery("select_user",User.class).setParameter("param",dolgozokod).getSingleResult();
+		d=em.createNamedQuery("select_dolgozo",Dolgozo.class).setParameter("param",dolgozokod).getSingleResult();
 		} catch(Exception ex){
 			return null;
 		}
-		return u;
+		return d;
 	}
 
 }
