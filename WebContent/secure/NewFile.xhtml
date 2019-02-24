@@ -13,27 +13,32 @@
 	<h:outputStylesheet name="css/newfile.css"></h:outputStylesheet>
 </ui:define>
 <ui:define name="szalag">
-		<h:form id="somFormId" class="somForm">
+	<div>
+		<h:form id="somFormId">
 			<h:selectOneMenu id="terulet" value="#{dbManager.t}" onchange="#{dbManager.valaszt()}">
 				<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
 				<f:ajax execute="somFormId" render="somFormId tablazat somForm2Id"></f:ajax>
 			</h:selectOneMenu>
 		</h:form>
 		
-		<h:form id="somForm2Id" class="somForm2">
+		<h:form id="somForm2Id">
 			<h:selectOneMenu id="beosztas" value="#{dbManager.b}" onselect="#{dbManager.bvalaszt()}">
 				<f:selectItems value="#{dbManager.beosztasok}" ></f:selectItems>
 				<f:ajax execute="somForm2Id tablazat" render="tablazat somForm2Id"></f:ajax>
 			</h:selectOneMenu>
 		</h:form>
-		
+	</div>
 		<script>
 	    function foo(element) {
 	        var $element = $(element);
 	        return $element.children(0).text();
 	    }
+	    function filt(){
+	    	$('#tablazat\\:dtable\\:col_filter').val('');
+	    	PF('userTable').filter();
+	    }
 		</script>
-		
+	<div>
 		<h:form id="tablazat">
 			<p:dataTable id="dtable" var="u" value="#{dbManager.userek}"  widgetVar="userTable">
 				<p:ajax event="filter"  update="@all"/>
@@ -85,6 +90,7 @@
 			</table>
 			<label id="lbld">#{dbManager.d}</label>
 		</h:form>
+	</div>
 </ui:define>
 </ui:composition>
 </html>

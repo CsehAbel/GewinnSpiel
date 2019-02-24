@@ -6,5 +6,5 @@ public interface IState{
 	
 	public abstract void zar();
 	
-	public abstract void szavaz(csv t);
+	public abstract boolean szavaz(String veszit,String kap,String ki,String kire);
 }

@@ -1,5 +1,6 @@
 package backend;
 
+
 public class ZarvaState implements IState {
 	
 	private Szavazas szavazas;
@@ -25,8 +26,9 @@ public class ZarvaState implements IState {
 	}
 
 	@Override
-	public void szavaz(csv t) {
+	public boolean szavaz(String veszit,String kap,String ki,String kire) {
 		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

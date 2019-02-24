@@ -1,20 +1,17 @@
 package backend;
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
-import authentication.LoginBean;
-import newfile.DbManager;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 public class NyitvaState implements IState {
-	
+
 	private Szavazas szavazas;
-	
-	@EJB
-	private DbManager dbManager;
-	
-	@Inject
-	private LoginBean loginBean;
-	
+
 	public NyitvaState(Szavazas szavazas){
 		this.szavazas=szavazas;
 	}
@@ -37,13 +34,8 @@ public class NyitvaState implements IState {
 
 
 	@Override
-	public void szavaz(csv t) {
-		csv c=dbManager.findUser(loginBean.getDolgozokod());
-		if(c.getSzavazat()>0){
-		c.setSzavazat(c.getSzavazat()-1);
-		//SET oszlophoz hozzáadás
-		System.out.println("setkapott");
-		t.setKapott(t.getKapott()+1);
-		}
+	public boolean szavaz(String veszit,String kap,String ki,String kire) {
+		return false;
 	}
+
 }

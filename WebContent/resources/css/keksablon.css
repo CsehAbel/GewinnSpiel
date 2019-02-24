@@ -4,33 +4,35 @@ html{height:100%;
 body{background-size: contain; 
 	background-repeat: no-repeat; 
 	background-position: center;
-	height:100%;
-	width:100%;}
-.divlogout{color: black;
-	height: auto;
-	width: 10%;
-	float: right;
-	text-shadow: 1px 1px white;}
-.btnkijel{width: 25%;
-	height: 50%;
+	display:flex;
+	flex-flow: column nowrap}
+body > form:first-child{color: black;
+	text-shadow: 1px 1px white;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;}
+body > form:first-child > div{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-end;
+}
+body > form:first-child > div > div:last-child{
+	width:100%;
+	text-align: right;
+	margin: 0px 10px;
+}
+body > form:first-child > div > input{width: 25%;
+	margin: 0px 10px;
 	font-size:1em;
 	padding: 0px;
-	float: left;
 	background-size: contain; 
 	background-repeat: no-repeat; 
 	background-position: center;}
-.divlogout{float:left;}
-.divlogout > div{}
-.divlogout > div :nth-child(2){
-	float: left;}
-.divlogout > div :nth-child(3){
-	clear:left;
-	float: left;
-	overflow: hidden;}
+
 #lab{
 	width: 20%;
 	height: 20%;
 	position: absolute;
-	bottom: 20px;
-	left: 20px;
+	bottom: 5px;
+	right: 20px;
 }

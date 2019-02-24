@@ -13,9 +13,9 @@
 <ui:define name="szalag">
 	<div class="divbelep">
 		<h:form>
-			<span class="spanbejel">Bejelentkezés:</span>
-			<h:inputText class="txtbejel" value="#{loginBean.dolgozokod}" />
-			<h:commandButton class="btnbejel" action="#{loginBean.doLogin()}" value="" style="#{trueFalseCSS.ajto()}" />
+			<span>Bejelentkezés:</span>
+			<h:inputText p:placeholder="Törzsszám" class="txtbejel" value="#{loginBean.dolgozokod}" />
+			<h:commandButton action="#{loginBean.doLogin()}" value="Bejelentkezés" />
 			<h:messages class="hiba" globalOnly="true"/>
 		</h:form>
 	</div></ui:define>

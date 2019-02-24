@@ -1,44 +1,22 @@
 .divbelep{
-	width: 15%;
-	height: 17%;
-	margin: 10%	 40%;
-	box-shadow: 1px 1px black;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	margin: 20% 0% 0% 0%;
+}
+.divbelep > form{
 	border-radius: 5px;
-	border: 1px solid rgb(96,198,236);}
-.txtbejel{width: 60%;
-	height: 30%;
-	border-color:transparent;
-	background: -webkit-linear-gradient(rgb(146,216,234), rgb(90,190,223));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-	margin: 2% 3% 2% 2%;
 	box-shadow: 1px 1px black;
-	border-radius: 5px;
-	font-size: 1.6em;
-	float:left;}
-.btnbejel{background-size: contain; 
-	background-repeat: no-repeat; 
-	background-position: center;
-	border-color:transparent;
-	float: left;
-	width: 20%;
-	height: 23%;
-	margin: 2% 0% 2% 0%;
-	box-shadow: 2px 2px grey;
-	padding: 1px;}
-form{width:100%;
-	height:100%;
-	padding: 4px 4px 4px 4px;
-	color:white;
-	text-shadow: 1px 1px rgb(190,229,241);
-	font-size: 1em;}
-.spanbejel{clear: both;
-	background: -webkit-linear-gradient(rgb(146,216,234), rgb(90,190,223));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-	margin: 2% 0% 0% 2%;
-	font-size: 1.3em;
-	width: 80%;}
-.hiba{float: left;
-	clear: both;}
-.divbelep{float: left;}
+	justify-content: space-evenly;
+	display: flex;
+	flex-flow: column wrap;
+	background: grey;
+	padding: 5px;}
+.divbelep > form > input, .divbelep > form > span{
+	margin: 2px;
+	padding: 2px;
+}
+.divbelep > form > input:first-child{
+	border-radius: 5px;}
+.divbelep > form > input:nth-child(2){
+	box-shadow: 2px 2px grey;}

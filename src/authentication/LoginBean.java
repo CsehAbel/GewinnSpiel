@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import newfile.DbManager;
-import newfile.csv;
 
 @Named
 @SessionScoped

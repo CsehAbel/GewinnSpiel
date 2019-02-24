@@ -1,5 +1,7 @@
 package newfile;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +18,9 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletResponse;
+
+import org.primefaces.context.RequestContext;
 
 import authentication.Dolgozo;
 import authentication.LoginBean;
@@ -37,8 +42,82 @@ public class DbManager {
 	@Inject
 	private LoginBean loginBean;
 	
-	/*@Inject
-	private Szavazas szavazas;*/
+	@Inject
+	private Szavazas szavazas;
+	
+	public void exportPontok() {
+		try {
+	        String filename = "pontok.csv";
+
+	        FacesContext fc = FacesContext.getCurrentInstance();
+	        HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+
+	        response.reset();
+	        response.setContentType("text/comma-separated-values");
+	        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+	        OutputStream output = response.getOutputStream();
+
+	        // writing just sample data
+	        List<String> strings = new ArrayList<String>();
+	        
+	        Query query;
+			query=em.createNativeQuery("SELECT d.nev,d.torzsszam,SUM(p.kapott) as kap FROM pontok p JOIN dolgozo d ON p.adoszam=d.adoszam group by p.adoszam ORDER BY kap DESC");
+	        
+			for(Object[] o:(List<Object[]>) query.getResultList()){
+	        	strings.add(o[0].toString()+";"+o[1]+";"+o[2]+"\n");
+	        }
+	        
+	        for (String s : strings) {
+	            output.write(s.getBytes());
+	        }
+
+	        output.flush();
+	        output.close();
+
+	        fc.responseComplete();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void exportKikire() {
+		try {
+	        String filename = "kikire.csv";
+
+	        FacesContext fc = FacesContext.getCurrentInstance();
+	        HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+
+	        response.reset();
+	        response.setContentType("text/comma-separated-values");
+	        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+	        OutputStream output = response.getOutputStream();
+
+	        // writing just sample data
+	        List<String> strings = new ArrayList<String>();
+	        
+	        Query query;
+			query=em.createNativeQuery("SELECT ki,kire FROM kikire ORDER BY ki ASC;");
+	        
+			for(Object[] o:(List<Object[]>) query.getResultList()){
+	        	strings.add(o[0].toString()+";"+o[1]+"\n");
+	        }
+	        
+	        for (String s : strings) {
+	            output.write(s.getBytes());
+	        }
+
+	        output.flush();
+	        output.close();
+
+	        fc.responseComplete();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	private String t;
 	
@@ -76,7 +155,7 @@ public class DbManager {
 	public Pontok findPontok(String adoszam){
 		Pontok d=null;
 		Query query;
-		query=em.createQuery("FROM Pontok d WHERE d.pontok LIKE :k");
+		query=em.createQuery("FROM Pontok d WHERE d.adoszam LIKE :k");
 		query.setParameter("k", adoszam);
 		try{d=(Pontok) query.getSingleResult();
 		}catch(NoResultException ex){
@@ -104,24 +183,6 @@ public class DbManager {
 		return (List<Dolgozo>) query.getResultList();
 	}
 	
-	public void updateKapott(String adoszam){
-		Pontok kap=findPontok(adoszam);
-		kap.setKapott(kap.getKapott()+1);
-		/*FacesMessage msg=new FacesMessage(kap.getcNev()+","+kap.getcDolgozokod()+" pontot kapott.", "Kapott");
-		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext.getCurrentInstance().addMessage(null, msg);*/
-		em.merge(kap);
-	}
-	
-	public void updateSzavazat(String adoszam){
-		Pontok veszit=findPontok(adoszam);
-		veszit.setSzavazat(veszit.getSzavazat()-1);
-		/*FacesMessage msg=new FacesMessage(veszit.getcNev()+","+veszit.getcDolgozokod()+" pontot veszített.", "Veszített");
-		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext.getCurrentInstance().addMessage(null, msg);*/
-		em.merge(veszit);
-	}
-	
 	public void concd(int i){
 		d=""+d+""+i;
 		System.out.println("d:"+d);
@@ -145,19 +206,12 @@ public class DbManager {
 			Xsw xsw1=findXsw();
 			if(xsw1!=null && Integer.parseInt(xsw1.getDolgozokod())==Integer.parseInt(loginBean.getDolgozokod()) ){
 				
-				Pontok veszit=findPontok(findDolgozo(loginBean.getDolgozokod()).getAdoszam());
-				if(veszit.getSzavazat()>0){
-					System.out.println("if(veszit.getSzavazat()>0)");
-					updateKapott(u.getAdoszam());
-					updateSzavazat(veszit.getAdoszam());
-				} else{
-					System.out.println("1} else{");
-					FacesMessage msg=new FacesMessage("Nincs több adható szavazat!", "Nincs pont");
-					msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				}
+				String veszit=findDolgozo(loginBean.getDolgozokod()).getAdoszam();
+				//u = A megerõsítés felületre jutáskor akire kattintott
+				String kap=u.getAdoszam();
+				szavazas.requestSzavaz(veszit,kap,loginBean.getDolgozokod(),u.getTorzsszam());
+				
 			} else{
-				System.out.println("2} else{");
 				FacesMessage msg=new FacesMessage("Hibás kártyaszám!", "Kártyaszám");
 				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -206,6 +260,7 @@ public class DbManager {
 			query.setParameter("b", b);
 			List<Dolgozo> list= (List<Dolgozo>) query.getResultList();
 			userek=list;
+			RequestContext.getCurrentInstance().execute("filt()");
 		} else{
 			userek=new ArrayList<>();
 		}

@@ -1,9 +1,36 @@
-#cForm{
+body{
+	display: flex;
+	flex-flow: column nowrap;
+}
+/*Kijelentkezés*/
+body > form:first-of-type{order: 1;}
+
+/*Terület,Beosztás selectOneMenu*/
+body > div:first-of-type{
+	display: flex;
+	flex-flow: row nowrap;
+	order:2;
+}
+body > div:nth-of-type(2) > div form:nth-of-type(2) > select,body > div:nth-of-type(2) > form:nth-of-type(3) > select{width: 100%; font-size: 1.7em;}
+
+/*tablazat tr display:block*/
+/*Keypad*/
+body > div:nth-of-type(2){
+	display: flex;
+	flex-flow: row nowrap;
+	order: 3;
+}
+#tablazat{
+	width:80%;
+}
+
+#cForm{order: 4;
 	width: 20%;
 	height: 60%;
 	float: left;
 	position: relative;
 }
+
 #cForm > table{width: 100%;height:80%;}
 #cForm > table > tbody{width:100%;
 	height:100%;}
@@ -25,36 +52,26 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.somForm,.somForm2{
-	width: 30%;
-	float:left;
-}
 
-.somForm > select,.somForm2 > select{
-	width: 100%;
-	font-size: 1.7em;
-}
-
-#tablazat{width:77%;height:90%;clear:left;float:left;}
 #tablazat > div{width: 100%;height:100%;}
-#tablazat > div > div:nth-child(2){
+#tablazat > div > div:nth-of-type(2){
 	height:80%;
     overflow: auto;
 }
-#tablazat > div > div:nth-child(2) > table{
+#tablazat > div > div:nth-of-type(2) > table{
 	table-layout: unset;
 	border:1px black;
 }
-#tablazat > div > div:nth-child(2) > table > tbody > tr{
+#tablazat > div > div:nth-of-type(2) > table > tbody > tr{
 	float: left;
 	display: block;
 	width: auto;
 	margin: 3px 5px;
 }
-#tablazat > div > div:nth-child(2) > table > tbody > tr > td{
+#tablazat > div > div:nth-of-type(2) > table > tbody > tr > td{
 	padding: 0px;
 }
 
-#tablazat > div > div:nth-child(2) > table > thead > tr > th{
+#tablazat > div > div:nth-of-type(2) > table > thead > tr > th{
 	padding: 0px;
 }

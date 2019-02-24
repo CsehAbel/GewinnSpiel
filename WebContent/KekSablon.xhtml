@@ -11,17 +11,17 @@
 <ui:insert name="head"></ui:insert>
 </h:head> 
 <body style="#{trueFalseCSS.css()}">
-	<h:form class="divlogout">
+	<h:form>
 		<!-- bejelentkezve megjelenik -->
 		<div jsf:rendered="#{loginBean.loggedIn}">
-			<h:commandButton class="btnkijel" action="#{loginBean.doLogout()}" value="" style="#{trueFalseCSS.exit()}" />
 			<div>#{loginBean.dolgozokod}</div>
+			<h:commandButton class="btnkijel" action="#{loginBean.doLogout()}" value="Kilépés" />
 			<div>#{loginBean.nev}</div>
 		</div>
 	</h:form>
 	<ui:insert name="szalag"></ui:insert>
 	<ui:insert name="kozep"></ui:insert>
-	<div id="lab" style="position: fixed; bottom: 20px; left: 20px; #{trueFalseCSS.cdr()}"></div>
+	<div id="lab" style="background-size: contain; background-repeat: no-repeat; background-position: top left; #{trueFalseCSS.cdr()}"></div>
 	<ui:insert name="lab" ></ui:insert>
 </body> 
 </html>

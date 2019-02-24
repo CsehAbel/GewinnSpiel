@@ -10,46 +10,30 @@
 <h:outputStylesheet name="css/adminhome.css"/>
 </ui:define>
 <ui:define name="szalag">
-	<!-- 
-	<h:form enctype="multipart/form-data">
-	    <h:inputFile value="#{Csv.file}">
-	        <f:ajax listener="#{Csv.save}" />
-	    </h:inputFile>
-	</h:form>
-	-->
-	<div>A böngésző megnyitásaskor, váltáskor alaphelyzetbe áll, pontosabban sessiononként.</div>
-	<div>
-		<!-- 
-		<h:form>
-		  <p:calendar id="naptar" mode="inline" value="#{szavazas.date1}" />
-		  <div>Szavazatot dátum megadásával megnyitva, megadható a lezárulás időpontja</div>
-		  <h:commandButton value="Nyitás" action="#{szavazas.requestNyit()}"/>
-		  <div>#{szavazas.IState}</div>
-		  <h:commandButton value="Zárás" action="#{szavazas.requestZar()}"/>
-		  <span>A szavazást manuálisan is le lehet állítani</span>
-		</h:form> 
-		-->
+	<div style="float: left; clear: both; box-shadow: 1px 1px black;
+	border-radius: 5px;
+	border: 1px solid rgb(96,198,236); background-color: grey; margin: 10px auto; width: 40%;">
+		<div style="float: left; clear: both; width: 90%; text-shadow: rgb(96,198,236) 1px 1px;">
+		A szavazás nyitása: #{szavazas.nyitas}</div>
+		<div style=" float: left; clear: both; width: 90%; text-shadow: rgb(96,198,236) 1px 1px;">
+		A szavazás zárása: #{szavazas.zaras}</div>
 	</div>
-	<h:form>
-		<div>Eredményhirdetés:</div>
-		<div>
-			<p:dataTable id="tablazat2" var="u" value="#{dbManager.allUser()}">
-				<p:column>
-								<f:facet name="header">Név</f:facet>
-								<h:outputFormat value="#{u.cNev}" />
-			    </p:column>
-				<p:column>
-								<f:facet name="header">#Kapott</f:facet>
-								<h:outputFormat value="#{u.kapott}" />
-				</p:column>
-			</p:dataTable>
+	<h:form class="exc">
+		<div>Excel letöltése:</div>
+		<div class="d2">
+			<div class="d2d1">
+			Pontok jelenlegi állása:</div>
+			
+			<h:commandButton class="d2h1" action="#{dbManager.exportPontok()}" 
+			value="Letöltés"/>
+			
+			<div class="d2d2">
+			Derítsd ki ki kire szavazott:</div>
+			
+			<h:commandButton class="d2h2" action="#{dbManager.exportKikire()}" 
+			value="Letöltés"/>
 	    </div>
 	</h:form>
-	<div id="kamugombok" style="color: white; text-shadow: 2px 2px black; position: absolute; bottom: 20px;">
-	<span>10 pont hozzáadása  </span><h:commandButton value="10 pont"></h:commandButton><br></br>
-	<span>Excel riport letöltése  </span><h:commandButton value="Pontszám szerint"></h:commandButton><br></br>
-	<span>Excel riport letöltése  </span><h:commandButton value="Ki kire szavazott"></h:commandButton><br></br>
-	</div>
 </ui:define>
 </ui:composition> 
 </html>

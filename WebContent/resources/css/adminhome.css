@@ -1,11 +1,29 @@
-form{
-	height: 50%;
-	width: 60%;
+.exc{
+	width: 40%;
+	height: auto;
+	margin: 10px auto;
+	float: left;
+	padding: 20px;
+	font-size: 1.5em;
+	clear: both;
+	text-shadow: rgb(96,198,236) 1px 1px;
+	background-color: grey;
+	box-shadow: 1px 1px black;
+	border-radius: 5px;
+	border: 1px solid rgb(96,198,236);
 }
 
-#kamugombok{
+.exc > div{
+	width: 100%;
 	float: left;
-	width: 30%;
-	height: 20%;
-	font-size: 1.3em;
 }
+
+.exc > div > div{
+	padding: 5px 5px 5px 15px;
+	clear: both; 
+	font-size: 0.9em;
+}
+.d2d1{padding: 5px;}
+.d2h1{float: right; padding: 5px;}
+.d2d2{padding: 10px;}
+.d2h2{float: right; padding: 5px;}

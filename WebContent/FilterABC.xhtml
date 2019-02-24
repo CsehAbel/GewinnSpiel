@@ -27,20 +27,21 @@
 		        </f:facet>
 		        
 		        <p:column id="col" filterBy="#{u.cNev}">
-		        <f:facet name="filter">
-		        	<p:inputText id="col_filter" style="visibility:hidden;"/>
-		        </f:facet>
-		          <h:outputText value="#{u.cNev}" />
+			        <f:facet name="filter">
+			        	<p:inputText id="col_filter" style="visibility:hidden;"/>
+			        </f:facet>
+		          	<h:outputText value="#{u.cNev}" />
 		        </p:column>
 		        
-		         <p:column>
-		          <h:outputText value="#{u.cDolgozokod}" />
+		        <p:column>
+		          	<h:outputText value="#{u.cDolgozokod}" />
 		        </p:column>
 			</p:dataTable>
 			<p:dataTable id="dtable2" var="k" value="#{dbManager.userekFiltered}">
 			    <p:column>
 				          <h:outputText value="#{k.cNev}" />
 				</p:column>
+				
 			    <p:column>
 				          <h:outputText value="#{k.cDolgozokod}" />
 				</p:column>
