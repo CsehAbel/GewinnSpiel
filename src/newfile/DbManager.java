@@ -301,16 +301,14 @@ public class DbManager {
 	}
 	
 	public List<SelectItem> getBeosztasok(){
-		if(t!=null){
-		Query query= em.createNativeQuery("SELECT DISTINCT d.munkakor FROM Dolgozo d where uzemegyseg = :pT");
-		query.setParameter("pT",t);
+		
+		Query query= em.createNativeQuery("SELECT DISTINCT d.munkakor FROM Dolgozo d");
 		List<String> list = (List<String>) query.getResultList();
 		List<SelectItem> si=new ArrayList<SelectItem>();
 		for(String s:list){
 			si.add(new SelectItem(s,s));
 		}
-		return si;}
-		else{ return null;}
+		return si;
 	}
 	
 	//különbözõ kezdõbetûket összegyûjti
