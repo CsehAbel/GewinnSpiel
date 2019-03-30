@@ -15,13 +15,14 @@
 	<h:outputScript name="js/newfile.js"></h:outputScript>
 </ui:define>
 <ui:define name="szalag">
+	<div><span>#{szavazas.IState.toString()}</span></div>
 	<div>
 		<h:form id="somFormId">
 			<h:selectOneMenu id="terulet" value="" onchange="utarol(this);">
 				<f:selectItems value="#{dbManager.teruletek}" ></f:selectItems>
 			</h:selectOneMenu>
 		</h:form>
-		
+		<!-- '...' első elemnek -->
 		<h:form id="somForm2Id">
 			<h:selectOneMenu id="beosztas" value="0" onchange="btarol(this);">
 				<f:selectItems value="#{dbManager.beosztasok}" ></f:selectItems>
@@ -33,19 +34,7 @@
 		<h:form id="tablazat">
 			<h:dataTable id="dtable" var="u" value="#{dbManager.userek}">
 				<f:facet name="header">
-					<!--  
-					<ui:repeat var="betu" value="#{dbManager.abc}">
-					<button type="button" onclick="betuSzures('#{betu}');">#{betu}
-					</button>
-					</ui:repeat>
-					
-					
-					betuk.forEach(function(botu){
-						return '<button type="button" onclick="betuSzures('+botu+');">'+botu+'</button>';
-						})
-					-->
 					<div id="betukfacet">
-						
 					</div>
 					'<button type="button" onclick="betuSzures('.*')">Mindenki</button>';
 		        </f:facet>

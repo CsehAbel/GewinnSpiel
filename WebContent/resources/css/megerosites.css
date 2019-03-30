@@ -22,6 +22,9 @@ table  tbody{width: 100%;
 	background-size: contain; 
 	background-repeat: no-repeat; 
 	background-position: top left;}
+.kepdiv > img{
+	height: 100%;
+}
 .szjegydiv{margin: 1% 0% 0% 25%;
 	float: left;
 	width: 23%;}

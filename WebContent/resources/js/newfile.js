@@ -18,7 +18,13 @@
 					betuk.push($("td:nth-of-type(1) input",this).val().charAt(0))
 				}
 				})
+				
 			betuk=uniq(betuk);
+			betuk.sort();
+			document.getElementById("betukfacet").innerHTML="";
+			betuk.forEach(function(botu){
+				document.getElementById("betukfacet").innerHTML+='<button type="button" onclick="betuSzures('+botu+');">'+botu+'</button>';
+			})
 		}
 		
 		function uzemSzur(element){
@@ -26,6 +32,8 @@
 				if(uzemRegex.test($("td:nth-of-type(3)",$(element)).text())==false){
 				 $(element).toggle(false);
 				}
+				
+				
 		}
 		function bSomSzur(){
 			var b=new Array();
@@ -81,7 +89,7 @@
 			betuk.sort();
 			document.getElementById("betukfacet").innerHTML="";
 			betuk.forEach(function(botu){
-				document.getElementById("betukfacet").innerHTML+='<button type="button" onclick="betuSzures('+botu+');">'+botu+'</button>';
+				document.getElementById("betukfacet").innerHTML+='<button type="button" onclick="betuSzures(\''+botu+'\');">'+botu+'</button>';
 			})
 			
 		}
@@ -103,7 +111,6 @@
 	    }
 
 	   function betuSzures(betu){
-		   
 			  $("#tablazat\\:dtable tbody tr").filter(function(){
 		
 						$(this).toggle(true);

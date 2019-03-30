@@ -6,11 +6,11 @@ body{
 body > form:first-of-type{order: 1;}
 
 /*Terület,Beosztás selectOneMenu*/
-body > div:first-of-type{
-	display: flex;
-	flex-flow: row nowrap;
-	order:2;
-}
+body > div{display: flex;
+	flex-flow: row nowrap;}
+body > div:nth-of-type(1){order:2;}
+body > div:nth-of-type(2){order:3;}
+body > div:nth-of-type(3){order:4;}
 body > div:nth-of-type(2) > div form:nth-of-type(2) > select,body > div:nth-of-type(2) > form:nth-of-type(3) > select{width: 100%; font-size: 1.7em;}
 
 /*tablazat tr display:block*/
@@ -22,6 +22,13 @@ body > div:nth-of-type(2){
 }
 #tablazat{
 	width:80%;
+}
+
+table tbody {
+    height: 300px;
+    display: inline-block;
+    width: 100%;
+    overflow:auto;
 }
 
 #cForm{order: 4;
@@ -58,20 +65,25 @@ body > div:nth-of-type(2){
 	height:80%;
     overflow: auto;
 }
-#tablazat > div > div:nth-of-type(2) > table{
+#tablazat > table{
 	table-layout: unset;
 	border:1px black;
+	background-color: grey;
 }
-#tablazat > div > div:nth-of-type(2) > table > tbody > tr{
+#tablazat > table > tbody > tr{
 	float: left;
 	display: block;
 	width: auto;
 	margin: 3px 5px;
 }
-#tablazat > div > div:nth-of-type(2) > table > tbody > tr > td{
+#tablazat > table > tbody > tr > td{
 	padding: 0px;
 }
 
-#tablazat > div > div:nth-of-type(2) > table > thead > tr > th{
+#tablazat > table > tbody > tr > td:nth-of-type(3),#tablazat > table > tbody > tr > td:nth-of-type(4){
+	display:none;
+}
+
+#tablazat > table > thead > tr > th{
 	padding: 0px;
 }

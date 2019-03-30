@@ -210,6 +210,7 @@ public class DbManager {
 				//u = A megerõsítés felületre jutáskor akire kattintott
 				String kap=u.getAdoszam();
 				szavazas.requestSzavaz(veszit,kap,loginBean.getDolgozokod(),u.getTorzsszam());
+				System.out.println(veszit+""+kap);
 				
 			} else{
 				FacesMessage msg=new FacesMessage("Hibás kártyaszám!", "Kártyaszám");

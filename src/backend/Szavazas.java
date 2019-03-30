@@ -30,7 +30,6 @@ public class Szavazas implements Serializable {
 		this.iState=new NyitvaState(this);
 		nyitas=LocalDate.now();
 		zaras=nyitas.plusDays(10);
-		
 	}
 	
 	public void requestNyit(){
