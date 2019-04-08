@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import backend.Pontok;
 import newfile.DbManager;
 
 @Named
@@ -23,6 +24,9 @@ public class LoginBean implements Serializable {
 		private String dolgozokod;
 		
 		private String nev;
+		
+		private int pont;
+		private int szavazat;
 		
 		private boolean loggedIn;
 		
@@ -39,6 +43,9 @@ public class LoginBean implements Serializable {
 			if(dolgozo!=null){ //&&this.Pass.equals(pass)){
 					nev=dolgozo.getNev();
 					loggedIn=true;
+					Pontok p=dm.findPontok(dolgozo.getAdoszam());
+					pont=p.getKapott();
+					szavazat=p.getSzavazat();
 					if(dolgozo.getAdmin()==1){
 						this.admin=true;
 						return nav.redirectToAdmin();
@@ -47,7 +54,6 @@ public class LoginBean implements Serializable {
 						this.admin=false;
 						return nav.redirectToNewFile();
 					}
-					
 			}
 			FacesMessage msg=new FacesMessage("Hibás kód!", "Bejelentkezési_Hiba");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -97,5 +103,20 @@ public class LoginBean implements Serializable {
 		public boolean isAdmin() {
 			return admin;
 		}
-		
+
+		public int getPont() {
+			return pont;
+		}
+
+		public void setPont(int pont) {
+			this.pont = pont;
+		}
+
+		public int getSzavazat() {
+			return szavazat;
+		}
+
+		public void setSzavazat(int szavazat) {
+			this.szavazat = szavazat;
+		}
 }

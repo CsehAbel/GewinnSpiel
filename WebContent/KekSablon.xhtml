@@ -14,8 +14,10 @@
 	<h:form>
 		<!-- bejelentkezve megjelenik -->
 		<div jsf:rendered="#{loginBean.loggedIn}">
-			<div>#{loginBean.dolgozokod}</div>
+			<div>szavazat: ' #{loginBean.szavazat} '</div>
+			<div>pont: ' #{loginBean.pont} '</div>
 			<h:commandButton class="btnkijel" action="#{loginBean.doLogout()}" value="Kilépés" />
+			<div>#{loginBean.dolgozokod}</div>
 			<div>#{loginBean.nev}</div>
 		</div>
 	</h:form>

@@ -15,7 +15,7 @@
 	<h:outputScript name="js/newfile.js"></h:outputScript>
 </ui:define>
 <ui:define name="szalag">
-	<div><span>#{szavazas.IState.toString()}</span></div>
+	<div><span>A szavazás: #{szavazas.IState.toString()}</span></div>
 	<div>
 		<h:form id="somFormId">
 			<h:selectOneMenu id="terulet" value="" onchange="utarol(this);">
@@ -25,6 +25,7 @@
 		<!-- '...' első elemnek -->
 		<h:form id="somForm2Id">
 			<h:selectOneMenu id="beosztas" value="0" onchange="btarol(this);">
+				<f:selectItem itemLabel="..." /> <!-- value-ja="" -->
 				<f:selectItems value="#{dbManager.beosztasok}" ></f:selectItems>
 			</h:selectOneMenu>
 		</h:form>
@@ -36,7 +37,8 @@
 				<f:facet name="header">
 					<div id="betukfacet">
 					</div>
-					'<button type="button" onclick="betuSzures('.*')">Mindenki</button>';
+					<button type="button" onclick="betuSzures('.*')">Kezdőbetű szűrő X</button>
+					<button type="button" onclick="utarol($('#somFormId\\:terulet'))">Beosztás szűrő X</button>
 		        </f:facet>
 		        
 		        <h:column>
@@ -73,7 +75,7 @@
 					<td><input type="button" onclick="del()" value="Törlés"/></td>
 				</tr>
 			</table>
-			<label id="lbld">#{dbManager.d}</label>
+			<label id="lbld"></label>
 		</h:form>
 	</div>
 </ui:define>

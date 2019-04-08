@@ -1,5 +1,10 @@
 		var uzemegyseg="";
 		
+		$( window ).on( "load", function() {
+			uzemegyseg="Büro";
+			utarol($('#somFormId\\:terulet')[0]);
+		})
+		
 		function utarol(element){
 			uzemegyseg=$("option:selected",element).text();
 			console.log(uzemegyseg);
@@ -11,6 +16,7 @@
 			})
 			
 			bSomSzur();
+			$('#somForm2Id\\:beosztas').val("");
 			
 			betuk=new Array();
 			$("#tablazat\\:dtable tbody tr").filter(function(){
@@ -23,13 +29,14 @@
 			betuk.sort();
 			document.getElementById("betukfacet").innerHTML="";
 			betuk.forEach(function(botu){
-				document.getElementById("betukfacet").innerHTML+='<button type="button" onclick="betuSzures('+botu+');">'+botu+'</button>';
+				document.getElementById("betukfacet").innerHTML+='<button type="button" onclick="betuSzures(\''+botu+'\');">'+botu+'</button>';
 			})
 		}
 		
 		function uzemSzur(element){
-				var uzemRegex=new RegExp('^'+uzemegyseg+"$");	 
-				if(uzemRegex.test($("td:nth-of-type(3)",$(element)).text())==false){
+				//var uzemRegex=new RegExp('^'+uzemegyseg+"$");	 
+				//if(uzemRegex.test($("td:nth-of-type(3)",$(element)).text())==uzemegyseg){
+				if($("td:nth-of-type(3)",$(element)).text()!=uzemegyseg){
 				 $(element).toggle(false);
 				}
 				
@@ -43,12 +50,13 @@
 					b.push($("td:nth-of-type(4)",$(this)).text());
 				}
 			})
-			b=uniq(b);
-			
+			b=uniq(b); //Kigyűjtöm a táblázatból a beosztasokat
+			b.push("...");
+			//Kiszedem az optionsból ami nem az üzemrészhez tartozó beosztások
 			$("#somForm2Id\\:beosztas option").filter(function(){
 				$(this).toggle(true);
 				
-				if(b.includes(this.value)==false){
+				if(b.includes(this.value)==false){//Ha táblázatból kigyűjtött+"..." beosztas nem tartalmazza akkor elrejtem
 					$(this).toggle(false);
 				}
 			})
@@ -75,7 +83,9 @@
 			
 			beosztas=$("option:selected",element).text();
 			$("#tablazat\\:dtable tbody tr").filter(function(){
+				if(beosztas!="..."){
 				beosztasSzur(this);
+				}
 			})
 			
 			betuk=new Array();
@@ -95,12 +105,9 @@
 		}
 
 		function beosztasSzur(element){
-			console.log("beosztasSzur meghívodik");
-			var beosztasRegex=new RegExp('^'+beosztas+"$");	 
-			  if(beosztasRegex.test($("td:nth-of-type(4)",$(element)).text())==false){
-				  $(element).toggle(false);
-			  } else{
-				  console.log($("td:nth-of-type(4)",$(element)).text());
+			//var beosztasRegex=new RegExp('^'+beosztas+".*$");
+			  if($("td:nth-of-type(4)",$(element)).text()!=beosztas){
+				$(element).toggle(false);
 			  }
 		}
 		
@@ -114,33 +121,53 @@
 			  $("#tablazat\\:dtable tbody tr").filter(function(){
 		
 						$(this).toggle(true);
-							
+						uzemSzur(this);
+
+						if(optionoklistaba().includes(beosztas)){
+							beosztasSzur(this);
+						}
+						//Ha nem volt btarol()==kivalasztva a som-ból, akkor beosztas=""  és nincs mire a betuszurest elvégezni
 						var betuRegex=new RegExp('^'+betu+'.*'); 
 						if(betuRegex.test($("td:nth-of-type(1) input",this).val())==false){
 						 $(this).toggle(false);
-						} else{
-						 if(uzemegyseg!=""){
-						  uzemSzur(this);
-						
-						  if(beosztas!=""){
-							  beosztasSzur(this);}
-						 }
-						 
 						}
+						
 			})
 	    }
+	   
+	   //->beosztasok Dropdown.t listába-> majd betuszuresben beosztasSzur(this)-t csak akkor hajtsa végre ha beosztas benne van a dropdownba
+	   function optionoklistaba(){
+		   var optionok=new Array();
+		   $("#somForm2Id\\:beosztas option").filter(function(){
+			   if($(this).css("display")!="none"){
+			   optionok.push($(this).val());
+			   }
+		   });
+		   return optionok;
+	   }
 	   
 	    var kartyakod='';
 		
 		function addChar(c){
 			kartyakod=kartyakod+c;
 			console.log(kartyakod);
+			$('#lbld')[0].innerHTML=kartyakod;
 			if(kartyakod.length===5){
-			 var form = document.getElementById('cForm');
-			 form.submit();
+			 /*var form = document.getElementById('cForm');
+			 form.submit();*/
+			  $("#tablazat\\:dtable tbody tr").filter(function(){
+					$(this).toggle(true);
+					
+					var dkodRegex=new RegExp('^'+kartyakod+'.*'); 
+					if(dkodRegex.test($("td:nth-of-type(2)",this).text())==false){
+					 $(this).toggle(false);
+					}
+			  });
 			}
 		}
 
 		function del(){
 			kartyakod='';
+			$('#lbld')[0].innerHTML=kartyakod;
+			utarol($('#somFormId\\:terulet')[0])
 		}

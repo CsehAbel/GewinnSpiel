@@ -1,42 +1,32 @@
-body{height: 100%;}
-.formvissza{float: left;
-	width: 10%;
-	height: 10%;}
-.vissza{height:100%;
-	width:100%;}
-.containertable{margin: 2% 0% 0% 25%;
-	width: auto;
-	height: 30%;
-	font-size: 2em;
-	}
+body{height: 100%;
+	 justify-content: flex-start;}
+.formvissza{
+	width: 10%;}
+.vissza{width:100%;}
+body > div:nth-of-type(1){
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+.containertable{
+}
 .containertable,.szjegydiv{
 	text-shadow: black 1px 1px;
 	background-color: grey;}
 table  tbody{width: 100%;
 	height: 100%;}
-.kepdiv{height:37%;
-	width: 20%;
-	clear: left;
-	margin: 1% 0% 0% 25%;
-	float: left;
-	background-size: contain; 
-	background-repeat: no-repeat; 
-	background-position: top left;}
-.kepdiv > img{
-	height: 100%;
-}
-.szjegydiv{margin: 1% 0% 0% 25%;
-	float: left;
+.kepdiv{display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;}
+.kepdiv > img{height: 50%;}
+.kepdiv > div{width: 30%;
+	display: flex;
+	flex-flow: column nowrap;}
+.szjegydiv{
 	width: 23%;}
-.containertable,.szjegydiv{font-size: 1.3em;}
-#dForm > table{	float: left; width: 100%; height: 100%;}
-#dForm > table > tbody{height:100%;width:100%;}
-#dForm > table > tbody > tr > td{width: 30%;
+#nTable{	float: left; width: 100%; height: 100%;}
+#nTable > tbody{height:100%;width:100%;}
+#nTable > tbody > tr > td{width: 30%;
 	height: 23%;}
-#dForm > table > tbody > tr > td > input{width: 100%;
-	height:100%;}
-#dForm{height: 50%;
-	width: 20%;
-	float: left;
-	margin: 1% 0% 0% 2%;
-	padding: 2px;}
+#nTable > tbody > tr > td > input{width: 100%;
+	height:100%;}  	
