@@ -43,7 +43,8 @@
 		        
 		        <h:column>
 		          <h:commandButton value="#{u.nev}"  action="#{navigationBean.redirectToMegerosites()}">
-		        	<f:setPropertyActionListener value="#{u}" target="#{dbManager.u}" />
+		        	<f:setPropertyActionListener value="#{u}" target="#{megerositesManager.u}" />
+		        	<f:setPropertyActionListener value="#{null}" target="#{megerositesManager.js}"></f:setPropertyActionListener>
 	          	  </h:commandButton>
 		        </h:column>
 		        
@@ -71,7 +72,7 @@
 	        	</tr>
 	        	</c:forEach>
 				<tr>
-					<td> <input type="button" onclick="addChar(0);" value="0"/></td>
+					<td><input type="button" onclick="addChar(0);" value="0"/></td>
 					<td><input type="button" onclick="del()" value="Törlés"/></td>
 				</tr>
 			</table>

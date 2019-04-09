@@ -11,6 +11,8 @@
 <ui:composition template="../KekSablon.xhtml">
 <ui:define name="head">
 	<h:outputStylesheet name="css/megerosites.css"></h:outputStylesheet>
+	<h:outputScript name="js/megerosites.js"></h:outputScript>
+	<h:outputScript name="js/jquery-3.3.1.js"></h:outputScript>
 </ui:define>
 <ui:define name="szalag">
 	<script>
@@ -19,7 +21,6 @@
 	function init(eo){
 	    karakterek="";
 	}
-	fun
 	</script>
 	
 	<h:form class="formvissza">
@@ -30,16 +31,16 @@
 		<table class="containertable">
 			<tr>
 				<td>Név:</td>
-				<td>#{dbManager.u.nev}</td></tr>
+				<td>#{megerositesManager.u.nev}</td></tr>
 			<tr>
 				<td>Dolgozókód:</td>
-				<td>#{dbManager.u.torzsszam}</td></tr>
+				<td>#{megerositesManager.u.torzsszam}</td></tr>
 			<tr>
 				<td>Beosztás:</td>
-				<td>#{dbManager.u.munkakor}</td></tr>
+				<td>#{megerositesManager.u.munkakor}</td></tr>
 			<tr>
 				<td>Terület:</td>
-				<td>#{dbManager.u.uzemegyseg}</td></tr>
+				<td>#{megerositesManager.u.uzemegyseg}</td></tr>
 		</table>
 	</div>
 	
@@ -52,18 +53,27 @@
 						<tr>
 							<c:forEach var="i" begin="1" end="3">
 					          <td>
-						          <h:commandButton action="#{dbManager.concks((j*3)+i)}" value="#{(j*3)+i}">
-						          	<f:ajax execute="@this" render="lblks"/></h:commandButton></td></c:forEach></tr></c:forEach>
+					          <input type="button" onclick="addChar(#{(j*3)+i});" value="#{(j*3)+i}"/>
+						      </td>
+						    </c:forEach>
+						 </tr>
+					</c:forEach>
 					<tr>
-						<td><h:commandButton action="#{dbManager.concks(0)}" value="#{0}">
-				          		<f:ajax execute="@this"  render="dForm"/> </h:commandButton> </td>
-						<td><h:commandButton action="#{dbManager.backsks()}" value="Törlés">
-				          		<f:ajax  execute="@this" render="dForm"/></h:commandButton> </td></tr>
+						<td><input type="button" onclick="addChar(#{0});" value="#{0}"/></td>
+						<td><input type="button" onclick="del()" value="Törlés"/> </td>
+					</tr>
 		</table>
-		<label>itt jelennek meg a csillagok</label>
+		<label id="lbld"></label>
 		
 		<h:form id="submitkkod">
-			<h:inputSecret pt:placeholder="csillagok Bean változóba betöltöm a kkod-ot javascript ből submitra" value="" />
+			<h:inputHidden id="inputHidden" value="#{megerositesManager.kkod}" />
+			<h:commandButton id="cmdBtn" value="beanbe jquery kkod action xsw kereses" action="#{megerositesManager.requestSzavaz()}">
+			</h:commandButton>
+			<h:outputScript rendered="#{not empty megerositesManager.js}">
+			var w = window.open('/Szavazas/Siker.html','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350');
+			w.focus();
+			setTimeout(function() {w.close();}, 1000);
+			</h:outputScript>
 		</h:form>
 		
 		<h:messages class="hiba" globalOnly="true"/>

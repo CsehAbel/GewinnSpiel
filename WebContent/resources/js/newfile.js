@@ -163,6 +163,8 @@
 					 $(this).toggle(false);
 					}
 			  });
+			  kartyakod='';
+			  $('#lbld')[0].innerHTML=kartyakod;
 			}
 		}
 

@@ -42,14 +42,17 @@ public class Szavazas implements Serializable {
 		zaras=LocalDate.now();	
 	}
 	
-	public void requestSzavaz(String veszit,String kap,String ki,String  kire){
+	public boolean requestSzavaz(String veszit,String kap,String ki,String  kire){
 		//System.out.println("iState: "+iState.getClass().getName());
 		if(iState instanceof NyitvaState){
-			szavaz(veszit, kap,ki,kire);
+			return szavaz(veszit, kap,ki,kire);
+		} else{
+			return false;
 		}
 	}
 	
 	public boolean szavaz(String veszit,String kap,String ki,String kire) {
+		
 		Pontok v=null;
 		Query query;
 		System.out.println(em==null ? "null az em":"nem null az em");
@@ -69,7 +72,7 @@ public class Szavazas implements Serializable {
 			System.out.println("nincs ilyen adoszammal rekord a pontok táblában");
 			return false;
 		}
-		if(v.getSzavazat()>0){
+		if(v.getSzavazat()>0 && v.getAdoszam()!=k.getAdoszam()){
 			v.setSzavazat(v.getSzavazat()-1);
 			em.merge(v);
 			k.setKapott(k.getKapott()+1);

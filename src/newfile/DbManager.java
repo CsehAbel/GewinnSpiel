@@ -119,24 +119,10 @@ public class DbManager {
 	    }
 	}
 	
-	private String t;
-	
-	private String b;
-	
-	private String ks;
-	
-	//private String betu;
-	
 	public List<Dolgozo> userek;
-	
-	private Dolgozo u;
-	
-	private String d;
 	
 	@PostConstruct
 	public void init(){
-		d="";
-		ks="";
 		userek=allDolgozo();
 	}
 	
@@ -164,111 +150,11 @@ public class DbManager {
 		return d;
 	}
 	
-	public Xsw findXsw(){
-		Xsw c=null;
-		Query query;
-		query=em.createQuery("FROM Xsw x WHERE x.kartyaszam = :x");
-		query.setParameter("x", Integer.parseInt(ks));
-		try{c=(Xsw)query.getSingleResult();
-		System.out.println("xsw:"+c.getDolgozokod());
-		}catch(NoResultException ex){
-			System.out.println(ks+" xsw nem talált.");
-		}
-		return c;
-	}
-	
 	public List<Dolgozo> allDolgozo(){
 		Query query;
 		query=em.createQuery("FROM Dolgozo AS d");
 		return (List<Dolgozo>) query.getResultList();
 	}
-	
-	public void concd(int i){
-		d=""+d+""+i;
-		System.out.println("d:"+d);
-		if(d.length()==5){
-			if(findDolgozo(d)!=null){
-				userek=new ArrayList<>();
-				userek.add(findDolgozo(d));
-			} else{
-				FacesMessage msg=new FacesMessage("Nincs ilyen kód!");
-				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
-			d="";
-		}
-	}
-	
-	public void concks(int i){
-		ks=""+ks+""+i;
-		System.out.println("ks:"+ks);
-		if(ks.length()==5){
-			Xsw xsw1=findXsw();
-			if(xsw1!=null && Integer.parseInt(xsw1.getDolgozokod())==Integer.parseInt(loginBean.getDolgozokod()) ){
-				
-				String veszit=findDolgozo(loginBean.getDolgozokod()).getAdoszam();
-				//u = A megerõsítés felületre jutáskor akire kattintott
-				String kap=u.getAdoszam();
-				szavazas.requestSzavaz(veszit,kap,loginBean.getDolgozokod(),u.getTorzsszam());
-				System.out.println(veszit+""+kap);
-				
-			} else{
-				FacesMessage msg=new FacesMessage("Hibás kártyaszám!", "Kártyaszám");
-				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
-			ks="";
-		}
-	}
-	
-	public void backsd(){
-		String str="";
-		char[] s=d.toCharArray();
-		for(int i=0;i<s.length-1;i++){
-			str+=s[i];
-		}
-		d=str;
-	}
-	
-	public void backsks(){
-		String str="";
-		ks=str;
-	}
-	
-	public void valaszt(){
-		System.out.println("valaszt");
-		Query query;
-		query = em.createQuery("FROM Dolgozo AS d where d.uzemegyseg = :t ORDER BY d.nev");
-		List<Dolgozo> list=new ArrayList<>();
-		if(t!=null){
-			query.setParameter("t", t);
-			list= (List<Dolgozo>) query.getResultList();	
-		} else {
-			query.setParameter("t", getTeruletekNemSelectItem().get(0));
-			list= (List<Dolgozo>) query.getResultList();
-		}
-		userek=list;
-		b=null;
-	}
-	
-	public void bvalaszt(){
-		if(b!=null){
-		System.out.println("bvalaszt");
-		Query query;
-		query = em.createQuery("FROM Dolgozo AS d where d.uzemegyseg = :t AND d.munkakor = :b ORDER BY d.nev");
-		if(t!=null){
-			query.setParameter("t", t);
-			query.setParameter("b", b);
-			List<Dolgozo> list= (List<Dolgozo>) query.getResultList();
-			userek=list;
-			RequestContext.getCurrentInstance().execute("filt()");
-		} else{
-			userek=new ArrayList<>();
-		}
-		}
-		//return "submit()";
-	}
-	
 	
 	/*public void nullazas(){
 		Query query;
@@ -278,17 +164,6 @@ public class DbManager {
 		int db=query.executeUpdate();
 		System.out.println("update-elt sorok:"+db+"db");
 	}*/
-	
-	public String csillagks(){
-		
-		String s="";
-		
-		for(int i=0;i<ks.length();i++){
-			s+="*";
-		}
-		
-		return s;
-	}
 		
 	public List<SelectItem> getTeruletek(){
 		
@@ -326,77 +201,11 @@ public class DbManager {
 		return abc;
 	}
 
-	public List<String> getBeosztasokNemSelectItem(){
-		if(t!=null){
-			Query query= em.createNativeQuery("SELECT DISTINCT d.munkakor FROM Dolgozo d where uzemegyseg = :pT");
-			query.setParameter("pT",t);
-			List<String> list = (List<String>) query.getResultList();
-			return list;
-		} else{
-			return null;
-		}
-	}
-	
-	public List<String> getTeruletekNemSelectItem(){
-			
-			Query query= em.createNativeQuery("SELECT DISTINCT d.uzemegyseg FROM Dolgozo d");
-			List<String> list = (List<String>) query.getResultList();
-			return list;
-		}
-
-	/*public String getBetu() {
-		return betu;
-	}
-
-	public void setBetu(String betu) {
-		this.betu = betu;
-	}*/
-
 	public List<Dolgozo> getUserek() {
 		return userek;
 	}
 
 	public void setUserek(List<Dolgozo> userek) {
 		this.userek = userek;
-	}
-
-	public String getT() {
-		return t;
-	}
-
-	public void setT(String t) {
-		this.t = t;
-	}
-
-	public String getB() {
-		return b;
-	}
-
-	public void setB(String b) {
-		this.b = b;
-	}
-
-	public Dolgozo getU() {
-		return u;
-	}
-
-	public void setU(Dolgozo u) {
-		this.u = u;
-	}
-
-	public String getD() {
-		return d;
-	}
-
-	public void setD(String d) {
-		this.d = d;
-	}
-
-	public String getKs() {
-		return ks;
-	}
-
-	public void setKs(String ks) {
-		this.ks = ks;
 	}
 }
