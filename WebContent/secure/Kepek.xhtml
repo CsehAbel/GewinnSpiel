@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="../KekSablon.xhtml">
+<ui:define name="head">
+	<h:outputStylesheet></h:outputStylesheet>
+</ui:define>
+<ui:define name="szalag">
+	<script>
+	window.addEventListener('load',init,false);
+	
+	function init(eo){
+	    karakterek="";
+	}
+	</script>
+	<!-- This format allows room for enclosing complete file contents in the request body.
+		 In a JSF 2.0/2.1 web application, multipart/form-data requests are normally processed by a custom Filter -->
+	<h:form enctype="multipart/form-data">
+		<span>Max 2 MB</span>
+	    <h:inputFile id="inputFileId" value="#{imageStoreBean.file}">
+	        <ui:remove>
+	        		   <f:ajax listener="#{imageStoreBean.storeImage()}" />
+	        		   <f:validateLongRange minimum="5" maximum="200" />
+	        </ui:remove>
+	    </h:inputFile>
+	    <span>Pontszám(4):</span>
+	    <h:inputText id="pont" value="#{imageStoreBean.pont}" converterMessage="Nem egynél nagyobb egész számot adtál meg!" 
+	    			 required="true" requiredMessage="kötelező!" maxlength="4">
+	    	<f:validator validatorId="kepek.IntValidator"></f:validator>
+	    </h:inputText>
+	    <h:message class="hiba" for="pont" errorStyle="color:red" />
+	    <span>Leíras(100):</span>
+	    <h:inputTextarea id="leiras" value="#{imageStoreBean.leiras}" maxlength="100"
+	    			 required="true" requiredMessage="kötelező!">
+	    </h:inputTextarea>
+	    <h:message class="hiba" for="leiras" errorStyle="color:red" />
+	    <h:commandButton action="#{imageStoreBean.storeImage()}" value="Mentés" />
+	</h:form>
+	<h:form>
+		<div style="display:flex; flex-flow: row wrap;">
+			<c:forEach var="i" begin="1" end="#{imageManager.findKepDarab().size()}">
+			
+				<h:graphicImage id="image" alt="feltoltott kep 1" url="/image?param1=#{i}" />
+				
+			</c:forEach>
+		</div>
+	</h:form>
+</ui:define>
+</ui:composition>
+</html>
+
+

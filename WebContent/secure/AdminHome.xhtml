@@ -10,6 +10,11 @@
 <h:outputStylesheet name="css/adminhome.css"/>
 </ui:define>
 <ui:define name="szalag">
+	<h:form>
+				<h:commandButton value="Kepek"  action="#{navigationBean.redirectToKepek()}">
+		        	<f:setPropertyActionListener value="#{null}" target="#{imageStoreBean.siker}"/>
+	          	</h:commandButton>
+	</h:form>
 	<div style="float: left; clear: both; box-shadow: 1px 1px black;
 	border-radius: 5px;
 	border: 1px solid rgb(96,198,236); background-color: grey; margin: 10px auto; width: 40%;">

@@ -22,6 +22,12 @@ public class NavigationBean implements Serializable {
 		return "/secure/AdminHome.jsf?faces-redirect=true";
 	}
 	
+	
+	public String redirectToKepek() {
+		// TODO Auto-generated method stub
+		return "/secure/Kepek.jsf?faces-redirect=true";
+	}
+	
 	public String redirectToMegerosites(){
 		return "/secure/Megerosites.jsf?faces-redirect=true";
 	}

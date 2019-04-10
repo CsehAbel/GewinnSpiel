@@ -3,19 +3,19 @@ USE lokalis;
 DROP TABLE IF EXISTS pontok;
 CREATE TABLE pontok(
 	adoszam VARCHAR(40) PRIMARY KEY NOT NULL,
-    kapott int NOT NULL DEFAULT 0,
-    szavazat int NOT NULL DEFAULT 0
+    kapott int NOT NULL DEFAULT 0 CHECK (kapott >= 0),
+    szavazat int NOT NULL DEFAULT 0 CHECK (szavazat >=0)
 );
-/*DROP TABLE pontok_duplicate;*/
+DROP TABLE IF EXISTS pontok_duplicate;
 CREATE TABLE pontok_duplicate(
 	adoszam VARCHAR(40) NOT NULL,
-    kapott int NOT NULL DEFAULT 0,
-    szavazat int NOT NULL DEFAULT 0
+    kapott int NOT NULL DEFAULT 0 CHECK (kapott >= 0),
+    szavazat int NOT NULL DEFAULT 0 CHECK (szavazat >=0)
 );
 
-/*
+
 DROP TRIGGER IF EXISTS ignr_meglevo_adoszam;
- */
+
 
 delimiter $$
 CREATE TRIGGER ignr_meglevo_adoszam BEFORE INSERT ON pontok_duplicate

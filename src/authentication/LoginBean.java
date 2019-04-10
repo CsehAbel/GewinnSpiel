@@ -44,8 +44,10 @@ public class LoginBean implements Serializable {
 					nev=dolgozo.getNev();
 					loggedIn=true;
 					Pontok p=dm.findPontok(dolgozo.getAdoszam());
+					if(p!=null){
 					pont=p.getKapott();
 					szavazat=p.getSzavazat();
+					}
 					if(dolgozo.getAdmin()==1){
 						this.admin=true;
 						return nav.redirectToAdmin();

@@ -1,3 +1,0 @@
-USE lokalis;
-
-CREATE TABLE
