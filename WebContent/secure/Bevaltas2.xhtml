@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="../KekSablon.xhtml">
+<ui:define name="head">
+	<h:outputStylesheet name="css/bevaltas.css"></h:outputStylesheet>
+</ui:define>
+<ui:define name="szalag">
+	<h:form class="formvissza">
+		<h:commandButton class="vissza" action="#{navigationBean.redirectToNewFile()}" value="Vissza" />
+	</h:form>
+	<h:form>
+		<c:set var="kepek" value="#{imageManager.findKepDarab()}" />
+		<section id="photos" style="-webkit-column-count: #{kepek.size()};-moz-column-count: #{kepek.size()};column-count: #{kepek.size()};">
+			<ui:repeat value="#{imageManager.findKepid()}" var="i">
+				<div>
+				<h:graphicImage id="image" alt="feltoltott kep 1" url="/image?param1=#{i}" />
+				<div>#{imageManager.findKepekben(kepek,i).getLeiras()}</div>
+				<div>Beváltáshoz: #{imageManager.findKepekben(kepek,i).getPont()} pont</div>
+				<h:commandLink action="#{bevaltasManager.bevaltas(i,imageManager.findKepekben(kepek,i).getPont(),imageManager.findKepekben(kepek,i).getLeiras())}" value="Beváltás">
+					 		<f:ajax render="@all" execute="@this"></f:ajax>
+				</h:commandLink>
+				</div>
+			</ui:repeat>
+		</section>
+		<h:messages class="hiba" globalOnly="true"/>
+	</h:form>
+</ui:define>
+</ui:composition>
+</html>
+
+

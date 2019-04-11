@@ -30,7 +30,7 @@ public class NavigationBean implements Serializable {
 	
 	public String redirectToBevaltas() {
 		// TODO Auto-generated method stub
-		return "/secure/Bevaltas.jsf?faces-redirect=true";
+		return "/secure/Bevaltas2.jsf?faces-redirect=true";
 	}
 	
 	public String redirectToMegerosites(){
