@@ -28,6 +28,11 @@ public class NavigationBean implements Serializable {
 		return "/secure/Kepek.jsf?faces-redirect=true";
 	}
 	
+	public String redirectToBevaltas() {
+		// TODO Auto-generated method stub
+		return "/secure/Bevaltas.jsf?faces-redirect=true";
+	}
+	
 	public String redirectToMegerosites(){
 		return "/secure/Megerosites.jsf?faces-redirect=true";
 	}

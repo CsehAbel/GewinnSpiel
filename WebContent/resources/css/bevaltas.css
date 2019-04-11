@@ -1,0 +1,25 @@
+#photos{
+  -webkit-column-gap:   0px;
+  -moz-column-gap:      0px;
+  column-gap:           0px;  
+  background-color: grey;
+}
+
+#photos > div {
+  /* Just in case there are inline attributes */
+  width: 100% !important;
+  height: auto !important;
+  border: 1px solid black;
+  border-width: 1px 1px 0px 1px;
+  break-inside: avoid;
+  break-after:always;
+}
+
+#photos > div > img{
+	width:100%;
+	height: auto;
+}
+
+#photos > div > div:nth-of-type(1){
+	background-color:olive;
+}

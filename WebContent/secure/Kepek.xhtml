@@ -9,7 +9,7 @@
 
 <ui:composition template="../KekSablon.xhtml">
 <ui:define name="head">
-	<h:outputStylesheet></h:outputStylesheet>
+	<h:outputStylesheet name="css/kepek.css"></h:outputStylesheet>
 </ui:define>
 <ui:define name="szalag">
 	<script>
@@ -22,6 +22,7 @@
 	<!-- This format allows room for enclosing complete file contents in the request body.
 		 In a JSF 2.0/2.1 web application, multipart/form-data requests are normally processed by a custom Filter -->
 	<h:form enctype="multipart/form-data">
+	<div>
 		<span>Max 2 MB</span>
 	    <h:inputFile id="inputFileId" value="#{imageStoreBean.file}">
 	        <ui:remove>
@@ -29,27 +30,38 @@
 	        		   <f:validateLongRange minimum="5" maximum="200" />
 	        </ui:remove>
 	    </h:inputFile>
+	</div>
+	<div>
 	    <span>Pontszám(4):</span>
 	    <h:inputText id="pont" value="#{imageStoreBean.pont}" converterMessage="Nem egynél nagyobb egész számot adtál meg!" 
 	    			 required="true" requiredMessage="kötelező!" maxlength="4">
 	    	<f:validator validatorId="kepek.IntValidator"></f:validator>
 	    </h:inputText>
 	    <h:message class="hiba" for="pont" errorStyle="color:red" />
+	</div>
+	<div>
 	    <span>Leíras(100):</span>
 	    <h:inputTextarea id="leiras" value="#{imageStoreBean.leiras}" maxlength="100"
 	    			 required="true" requiredMessage="kötelező!">
 	    </h:inputTextarea>
 	    <h:message class="hiba" for="leiras" errorStyle="color:red" />
+	</div>
 	    <h:commandButton action="#{imageStoreBean.storeImage()}" value="Mentés" />
 	</h:form>
 	<h:form>
-		<div style="display:flex; flex-flow: row wrap;">
-			<c:forEach var="i" begin="1" end="#{imageManager.findKepDarab().size()}">
-			
+		<c:set var="kepek" value="#{imageManager.findKepDarab()}" />
+		<section id="photos" style="-webkit-column-count: #{kepek.size()};-moz-column-count: #{kepek.size()};column-count: #{kepek.size()};">
+			<ui:repeat value="#{imageManager.findKepid()}" var="i">
+				<div>
+				<h:commandLink action="#{imageManager.deleteRecept(i)}" value="">Törlés
+					 		<f:ajax render="@all" execute="@this"></f:ajax>
+				</h:commandLink>
 				<h:graphicImage id="image" alt="feltoltott kep 1" url="/image?param1=#{i}" />
-				
-			</c:forEach>
-		</div>
+				<div>#{imageManager.findKepekben(kepek,i).getLeiras()}</div>
+				<div>Beváltáshoz: #{imageManager.findKepekben(kepek,i).getPont()} pont</div>
+				</div>
+			</ui:repeat>
+		</section>
 	</h:form>
 </ui:define>
 </ui:composition>

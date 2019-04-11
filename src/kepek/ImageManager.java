@@ -32,11 +32,23 @@ public class ImageManager {
 		@Resource
 		private UserTransaction userTransaction;
 		
+		//id szerint rendezve(talán) eltárolja a findKepDarab metódusban
+		private List<Kep> kepek;
+		
+		private List<Integer> kepid;
+		
+		public Kep findKepekben(List<Kep> l,int id){
+			Kep k = l.stream()
+					  .filter(x -> (id==x.getId()))
+					  .findAny().orElse(null);
+			return k;
+					  
+		}
+		
 		//kepek byte[] nélkül
 		public List<Kep> findKepDarab(){
 				Query query;
 				query=em.createNativeQuery("SELECT id,pont,leiras FROM Kep k");
-				
 				List<Kep> kepek=new ArrayList<Kep>();
 				List<Object[]> l=(List<Object[]>) query.getResultList();
 				for(Object[] s:l){
@@ -46,7 +58,17 @@ public class ImageManager {
 					k.setLeiras(s[2].toString());
 					kepek.add(k);
 				}
+				this.kepek=kepek;
 				return kepek;
+		}
+		
+		public List<Integer> findKepid(){
+			Query query;
+			query=em.createNativeQuery("SELECT id FROM Kep k");
+			
+			List<Kep> kepek=new ArrayList<Kep>();
+			kepid=(List<Integer>) query.getResultList();
+			return kepid;
 		}
 		
 		public Kep saveKep(Kep kep){
@@ -55,10 +77,37 @@ public class ImageManager {
 				em.persist(kep);
 				userTransaction.commit();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return kep;
 		}
-	
+		
+		public void deleteRecept(int i){
+			try {
+				userTransaction.begin();
+				Kep k=em.find(Kep.class, i);
+				em.remove(k);
+				userTransaction.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		public List<Kep> getKepek() {
+			return kepek;
+		}
+
+		public void setKepek(List<Kep> kepek) {
+			this.kepek = kepek;
+		}
+
+		public List<Integer> getKepid() {
+			System.out.println("getKepid():"+kepid.size());
+			return kepid;
+		}
+
+		public void setKepid(List<Integer> kepid) {
+			this.kepid = kepid;
+		}		
 }

@@ -14,7 +14,10 @@
 	<h:outputScript name="js/newfile.js"></h:outputScript>
 </ui:define>
 <ui:define name="szalag">
-	<div><span>A szavazás: #{szavazas.IState.toString()}</span></div>
+	<h:form>
+	<span>A szavazás: #{szavazas.IState.toString()}</span>
+	<h:commandButton value="Nyeremény beváltása"  action="#{navigationBean.redirectToBevaltas()}"/>
+	</h:form>
 	<div>
 		<h:form id="somFormId">
 			<h:selectOneMenu id="terulet" value="" onchange="utarol(this);">
