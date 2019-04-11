@@ -29,15 +29,27 @@
 			<div class="d2d1">
 			Pontok jelenlegi állása:</div>
 			
-			<h:commandButton class="d2h1" action="#{dbManager.exportPontok()}" 
+			<h:commandButton class="d2h1" action="#{adminManager.exportPontok()}" 
 			value="Letöltés"/>
 			
 			<div class="d2d2">
 			Derítsd ki ki kire szavazott:</div>
 			
-			<h:commandButton class="d2h2" action="#{dbManager.exportKikire()}" 
+			<h:commandButton class="d2h2" action="#{adminManager.exportKikire()}" 
 			value="Letöltés"/>
 	    </div>
+	    <span>Dolgozó kiválasztása:</span>
+	    <h:inputText value="#{adminManager.dkod}"
+	    			 required="true" requiredMessage="kötelező!" maxlength="5">
+	    	<f:validator validatorId="adminhome.DkodValidator"></f:validator>
+	    </h:inputText>
+	    <span>Pontok levonása,hozzáadása:</span>
+	    <h:inputText value="#{adminManager.pontlevonas}" converterMessage="Nem egynél nagyobb egész számot adtál meg!" 
+	    			 required="true" requiredMessage="kötelező!" maxlength="4">
+	    	<f:convertNumber integerOnly="true"/>
+	    </h:inputText>
+	    <h:commandButton action="#{}" 
+			value="Érvényesítés"/>
 	</h:form>
 </ui:define>
 </ui:composition> 

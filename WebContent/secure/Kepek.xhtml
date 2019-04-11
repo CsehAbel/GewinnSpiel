@@ -27,7 +27,6 @@
 	    <h:inputFile id="inputFileId" value="#{imageStoreBean.file}">
 	        <ui:remove>
 	        		   <f:ajax listener="#{imageStoreBean.storeImage()}" />
-	        		   <f:validateLongRange minimum="5" maximum="200" />
 	        </ui:remove>
 	    </h:inputFile>
 	</div>
