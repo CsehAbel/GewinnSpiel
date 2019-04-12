@@ -27,3 +27,22 @@
 .d2h1{float: right; padding: 5px;}
 .d2d2{padding: 10px;}
 .d2h2{float: right; padding: 5px;}
+
+body > form:last-of-type{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content:center;
+}
+body > form:last-of-type > div{
+	background-color: grey;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-end;
+}
+body > form:last-of-type > div > *{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	flex-grow: 0;
+	flex-basis:50%;
+}

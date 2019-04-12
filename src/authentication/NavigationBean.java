@@ -33,6 +33,10 @@ public class NavigationBean implements Serializable {
 		return "/secure/Bevaltas2.jsf?faces-redirect=true";
 	}
 	
+	public String redirectToTop(){
+		return "/secure/Top.jsf?faces-redirect=true";
+	}
+	
 	public String redirectToMegerosites(){
 		return "/secure/Megerosites.jsf?faces-redirect=true";
 	}

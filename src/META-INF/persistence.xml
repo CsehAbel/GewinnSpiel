@@ -5,6 +5,9 @@
 		<class>authentication.Dolgozo</class>
 		<class>megerosites.Xsw</class>
 		<class>backend.Pontok</class>
+		<class>kepek.Kep</class>
+		<class>bevaltas.Nyer</class>
+		<class>adminhome.Levon</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.show_sql" value="true"/>

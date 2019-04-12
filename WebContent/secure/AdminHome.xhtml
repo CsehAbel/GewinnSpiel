@@ -6,9 +6,10 @@
       xmlns:p="http://primefaces.org/ui"> 
 
 <ui:composition template="../KekSablon.xhtml">
-<ui:define name="head">
-<h:outputStylesheet name="css/adminhome.css"/>
+	<ui:define name="head">
+	<h:outputStylesheet name="css/adminhome.css"/>
 </ui:define>
+
 <ui:define name="szalag">
 	<h:form>
 				<h:commandButton value="Kepek"  action="#{navigationBean.redirectToKepek()}">
@@ -29,28 +30,44 @@
 			<div class="d2d1">
 			Pontok jelenlegi állása:</div>
 			
-			<h:commandButton class="d2h1" action="#{adminManager.exportPontok()}" 
+			<h:commandButton class="d2h1" action="#{adminHandler.exportPontok()}" 
 			value="Letöltés"/>
 			
 			<div class="d2d2">
 			Derítsd ki ki kire szavazott:</div>
 			
-			<h:commandButton class="d2h2" action="#{adminManager.exportKikire()}" 
+			<h:commandButton class="d2h2" action="#{adminHandler.exportKikire()}" 
 			value="Letöltés"/>
 	    </div>
-	    <span>Dolgozó kiválasztása:</span>
-	    <h:inputText value="#{adminManager.dkod}"
-	    			 required="true" requiredMessage="kötelező!" maxlength="5">
-	    	<f:validator validatorId="adminhome.DkodValidator"></f:validator>
-	    </h:inputText>
-	    <span>Pontok levonása,hozzáadása:</span>
-	    <h:inputText value="#{adminManager.pontlevonas}" converterMessage="Nem egynél nagyobb egész számot adtál meg!" 
-	    			 required="true" requiredMessage="kötelező!" maxlength="4">
-	    	<f:convertNumber integerOnly="true"/>
-	    </h:inputText>
-	    <h:commandButton action="#{}" 
-			value="Érvényesítés"/>
 	</h:form>
+	
+		
+	<h:form>
+	<div>
+	    <div><span>Dolgozó kiválasztása:</span>
+	    <h:inputText id="kivalaszt" binding="#{input1}" value="#{levon.kitol}" converterMessage="Nem egész szám!" 
+	    			 required="true" requiredMessage="kötelező!" maxlength="5">
+	    			 <f:convertNumber integerOnly="true"></f:convertNumber>
+	    </h:inputText>
+	    </div>
+	    <h:message for="kivalaszt"/>
+	    <div>
+	    <span>Pontok +/-(4):</span>
+	    <h:inputText id="le" binding="#{input2}" converterMessage="Nem egész szám!" 
+	    			 required="true" requiredMessage="kötelező!" maxlength="4">
+	    			 <f:convertNumber integerOnly="true"></f:convertNumber>
+	    </h:inputText>
+	    </div>
+	    <h:message for="le"/>
+	    <div>
+	    <h:commandButton value="Érvényesítés" action="#{adminHandler.levonpont(input1.value,input2.value)}">
+		</h:commandButton>
+		</div>
+		<h:messages class="hiba" globalOnly="true"/>
+	</div>
+	</h:form>
+	
+	
 </ui:define>
 </ui:composition> 
 </html>

@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<ui:composition template="../KekSablon.xhtml">
+	<ui:define name="head">
+	<h:outputStylesheet name="css/top.css"/>
+</ui:define>
+
+<ui:define name="szalag">
+<h:form class="formvissza">
+		<h:commandButton class="vissza" action="#{navigationBean.redirectToNewFile()}" value="Vissza" />
+	</h:form>
+	<div>
+	<ui:repeat var="belso" value="#{topHandler.top15()}" >
+		<div>
+		<div>#{belso.get(0)}</div>
+		<div>#{belso.get(1)}</div>
+		<div>#{belso.get(2)}</div>
+		<div>#{belso.get(3)}</div>
+		<div>#{belso.get(4)}</div>
+		</div>
+	</ui:repeat>
+	</div>
+</ui:define>
+	</ui:composition>
+</html>

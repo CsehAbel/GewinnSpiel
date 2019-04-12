@@ -10,5 +10,3 @@ CREATE TABLE nyer (
     primary key (id),
     foreign key (nyid) REFERENCES kep(id)
 )
-
-SELECT * FROM nyer;

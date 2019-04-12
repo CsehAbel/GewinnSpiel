@@ -22,7 +22,6 @@ import javax.transaction.UserTransaction;
 import authentication.LoginBean;
 import kepek.Kep;
 
-@Named
 @ManagedBean
 @RequestScoped
 public class BevaltasManager {
@@ -64,7 +63,7 @@ public class BevaltasManager {
 			System.out.println("lel");
 			String subj=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm"))+" Nyeremény igény";
 			String msg=dnev+"("+torzs+")"+": \r\n"+"\tNyeremenyid: "+nyeremenyid+"\r\n\t"+leiras;
-			SendFromExchange.send(sent, true, "StromUV","Abcd123456","StromUV@ziehl-abegg.hu", "kecse.abel@ziehl-abegg.hu", "kecse.abel@ziehl-abegg.hu", "Nyeremény igény", msg);
+			SendFromExchange.send(sent, true, "StromUV","Abcd123456","StromUV@ziehl-abegg.hu", "pflanczer.barbara@ziehl-abegg.hu", "kecse.abel@ziehl-abegg.hu", "Nyeremény igény", msg);
 			if(sent.size()>0){
 				this.storeNyer(torzs, dpont, nyeremenyid, nypont);
 				FacesMessage hiba=new FacesMessage("Nyeremény igény elküldve a HR osztálynak!", "Email elküdlve");

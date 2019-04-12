@@ -21,7 +21,6 @@ import javax.transaction.UserTransaction;
 
 import authentication.Dolgozo;
 
-@Named
 @ManagedBean(name="imagemanager")
 @SessionScoped
 public class ImageManager {

@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-@Named
+@ManagedBean
 @Stateless
 public class DbManager {
 
@@ -53,6 +54,7 @@ public class DbManager {
 	}
 	
 	public Dolgozo findDolgozo(String dolgozokod){
+		System.out.println("dbManager->finddolgozokod(): "+dolgozokod);
 		Dolgozo d=null;
 		Query query;
 		query=em.createQuery("FROM Dolgozo d WHERE d.torzsszam LIKE :k");
@@ -74,6 +76,11 @@ public class DbManager {
 			System.out.println("nincs xsw");
 		}
 		return d;
+	}
+	
+	public Pontok mergePontok(Pontok p){
+		em.merge(p);
+		return p;
 	}
 	
 	public List<Dolgozo> allDolgozo(){

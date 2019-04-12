@@ -2,6 +2,7 @@ package backend;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Named
+@ManagedBean
 @javax.enterprise.context.ApplicationScoped
 public class Szavazas implements Serializable {
 	
