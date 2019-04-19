@@ -1,4 +1,4 @@
-USE lokalis;
+USE szavazas;
 CREATE TABLE levon (
 	id int AUTO_INCREMENT,
     ftorzsszam nvarchar(40),

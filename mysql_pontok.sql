@@ -1,4 +1,4 @@
-USE lokalis;
+USE szavazas;
 #SET GLOBAL general_log = 'ON';
 DROP TABLE IF EXISTS pontok;
 CREATE TABLE pontok(

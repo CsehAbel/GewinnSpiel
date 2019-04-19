@@ -1,4 +1,4 @@
-USE lokalis;
+USE szavazas;
 
 CREATE TABLE nyer (
 	id int(11) not null auto_increment,

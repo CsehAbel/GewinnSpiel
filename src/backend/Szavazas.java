@@ -1,4 +1,5 @@
 package backend;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ApplicationScoped;
@@ -8,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import newfile.DbManager;
 import java.io.Serializable;
@@ -23,6 +27,9 @@ public class Szavazas implements Serializable {
 	private LocalDate zaras;
 	
 	private IState iState;
+	
+	@Resource
+	private UserTransaction usertransaction;
 	
 	@PersistenceContext(unitName="Szavazas")
 	private EntityManager em;
@@ -75,14 +82,29 @@ public class Szavazas implements Serializable {
 		}
 		if(v.getSzavazat()>0 && v.getAdoszam()!=k.getAdoszam()){
 			v.setSzavazat(v.getSzavazat()-1);
-			em.merge(v);
-			k.setKapott(k.getKapott()+1);
-			em.merge(k);
+			try {
+				usertransaction.begin();
+				em.merge(v);
+				k.setKapott(k.getKapott()+1);
+				em.merge(k);
+				usertransaction.commit();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 			Kikire kikire=new Kikire();
 			kikire.setKi(ki);
 			kikire.setKire(kire);
-			em.merge(kikire);
+			try {
+				usertransaction.begin();
+				em.merge(kikire);
+				usertransaction.commit();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 			return true;
 		}

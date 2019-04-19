@@ -1,5 +1,4 @@
-
-
+USE szavazas;
 DROP TABLE IF EXISTS dolgozo;
 CREATE TABLE dolgozo(
 	adoszam VARCHAR(40) NOT NULL,
