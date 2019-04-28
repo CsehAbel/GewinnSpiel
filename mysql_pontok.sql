@@ -1,4 +1,4 @@
-USE szavazas;
+USE lokalis;
 #SET GLOBAL general_log = 'ON';
 DROP TABLE IF EXISTS pontok;
 CREATE TABLE pontok(
@@ -35,7 +35,5 @@ BEGIN
     TRUNCATE TABLE pontok_duplicate;
 END//
 DELIMITER ;
-
-CALL truncate_pontok();
 
 

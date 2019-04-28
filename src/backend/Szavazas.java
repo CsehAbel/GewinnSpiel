@@ -2,8 +2,10 @@ package backend;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -28,11 +30,8 @@ public class Szavazas implements Serializable {
 	
 	private IState iState;
 	
-	@Resource
-	private UserTransaction usertransaction;
-	
-	@PersistenceContext(unitName="Szavazas")
-	private EntityManager em;
+	@EJB
+	private SzavazasManager sm;
 
 	public Szavazas(){
 		this.iState=new NyitvaState(this);
@@ -62,51 +61,47 @@ public class Szavazas implements Serializable {
 	public boolean szavaz(String veszit,String kap,String ki,String kire) {
 		
 		Pontok v=null;
-		Query query;
-		System.out.println(em==null ? "null az em":"nem null az em");
-		query=em.createQuery("FROM Pontok d WHERE d.adoszam LIKE :k");
-		query.setParameter("k", veszit);
-		try{v=(Pontok) query.getSingleResult();
-		}catch(NoResultException ex){
-			System.out.println("nincs ilyen adoszammal rekord a pontok táblában");
+		v=sm.getPontok(veszit);
+		if(v==null) {
+			FacesMessage msg=new FacesMessage("Nincs a szavazatot adó adoszáma az adatbázisban!", "veszit nincs pontok ban");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return false;
 		}
 		
 		Pontok k=null;
-		query=em.createQuery("FROM Pontok d WHERE d.adoszam LIKE :k");
-		query.setParameter("k", kap);
-		try{k=(Pontok) query.getSingleResult();
-		}catch(NoResultException ex){
-			System.out.println("nincs ilyen adoszammal rekord a pontok táblában");
+		k=sm.getPontok(kap);
+		if(k==null) {
+			FacesMessage msg=new FacesMessage("Nincs a szavazatot kapó adoszáma az adatbázisban!", "kap nincs a pontok");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return false;
 		}
-		if(v.getSzavazat()>0 && v.getAdoszam()!=k.getAdoszam()){
+		if(v.getSzavazat()>0 && !v.getAdoszam().equals(k.getAdoszam())){
 			v.setSzavazat(v.getSzavazat()-1);
-			try {
-				usertransaction.begin();
-				em.merge(v);
-				k.setKapott(k.getKapott()+1);
-				em.merge(k);
-				usertransaction.commit();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			k.setKapott(k.getKapott()+1);
+			sm.decrKapott(v,k);
 			
 			
 			Kikire kikire=new Kikire();
 			kikire.setKi(ki);
 			kikire.setKire(kire);
-			try {
-				usertransaction.begin();
-				em.merge(kikire);
-				usertransaction.commit();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sm.storeKikire(kikire);
 	
 			return true;
+		} else {
+			if(!(0<v.getSzavazat())){
+				FacesMessage msg=new FacesMessage("Nincs leadható szavazat!", "veszít getSzavazat<=0");
+				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				return false;
+			} 
+			if(v.getAdoszam().equals(k.getAdoszam())) {
+				FacesMessage msg=new FacesMessage("Nem szavazhatsz magadra!", "v getAdoszam = k getAdoszam");
+				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				return false;
+			}
 		}
 		return false;
 	}

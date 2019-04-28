@@ -16,8 +16,6 @@ import javax.persistence.Query;
 import javax.servlet.http.Part;
 import javax.transaction.UserTransaction;
 
-import org.primefaces.model.UploadedFile;
-
 import backend.Pontok;
 
 @ManagedBean

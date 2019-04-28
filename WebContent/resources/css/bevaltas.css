@@ -4,22 +4,29 @@
   column-gap:           0px;  
   background-color: grey;
 }
-
+#photos > div{
+	display:flex;
+	flex-flow:column nowrap;}
 #photos > div {
   /* Just in case there are inline attributes */
   width: 100% !important;
-  height: auto !important;
-  border: 1px solid black;
-  border-width: 1px 1px 0px 1px;
+  height: auto;
+  border: 3px solid white;
   break-inside: avoid;
-  break-after:always;
+  break-after: always;
+}
+#photos > div > div, #photos > div > a{
+	width:max-content;
+	padding: 2px 5px;
+	margin: 0px auto;}
+#photos > div > div:nth-of-type(1){
+	background-color:olive;
 }
 
 #photos > div > img{
-	width:100%;
+	max-width: 200px;
+	max-height: 200px;
+	width: auto;
 	height: auto;
-}
-
-#photos > div > div:nth-of-type(1){
-	background-color:olive;
+	margin: 0px auto;
 }

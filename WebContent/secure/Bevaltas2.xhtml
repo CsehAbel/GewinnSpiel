@@ -16,14 +16,14 @@
 		<h:commandButton class="vissza" action="#{navigationBean.redirectToNewFile()}" value="Vissza" />
 	</h:form>
 	<h:form>
-		<c:set var="kepek" value="#{imageManager.findKepDarab()}" />
-		<section id="photos" style="-webkit-column-count: #{kepek.size()};-moz-column-count: #{kepek.size()};column-count: #{kepek.size()};">
-			<ui:repeat value="#{imageManager.findKepid()}" var="i">
+		<c:set var="kepekHalfSize" value="#{imageHandler.findKepDarabHalfSize()}" />
+		<section id="photos" style="column-count: #{kepekHalfSize};">
+			<ui:repeat value="#{imageHandler.findKepId()}" var="i">
 				<div>
 				<h:graphicImage id="image" alt="feltoltott kep 1" url="/image?param1=#{i}" />
-				<div>#{imageManager.findKepekben(kepek,i).getLeiras()}</div>
-				<div>Beváltáshoz: #{imageManager.findKepekben(kepek,i).getPont()} pont</div>
-				<h:commandLink action="#{bevaltasManager.bevaltas(i,imageManager.findKepekben(kepek,i).getPont(),imageManager.findKepekben(kepek,i).getLeiras())}" value="Beváltás">
+				<div>#{imageHandler.findKepekben(i).getLeiras()}</div>
+				<div>Beváltáshoz: #{imageHandler.findKepekben(i).getPont()} pont</div>
+				<h:commandLink action="#{bevaltasHandler.bevaltas(i,imageHandler.findKepekben(i).getPont(),imageHandler.findKepekben(i).getLeiras())}" value="Beváltás">
 					 		<f:ajax render="@all" execute="@this"></f:ajax>
 				</h:commandLink>
 				</div>

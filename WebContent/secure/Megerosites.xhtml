@@ -30,16 +30,16 @@
 		<table class="containertable">
 			<tr>
 				<td>Név:</td>
-				<td>#{megerositesManager.u.nev}</td></tr>
+				<td>#{megerositesHandler.u.nev}</td></tr>
 			<tr>
 				<td>Dolgozókód:</td>
-				<td>#{megerositesManager.u.torzsszam}</td></tr>
+				<td>#{megerositesHandler.u.torzsszam}</td></tr>
 			<tr>
 				<td>Beosztás:</td>
-				<td>#{megerositesManager.u.munkakor}</td></tr>
+				<td>#{megerositesHandler.u.munkakor}</td></tr>
 			<tr>
 				<td>Terület:</td>
-				<td>#{megerositesManager.u.uzemegyseg}</td></tr>
+				<td>#{megerositesHandler.u.uzemegyseg}</td></tr>
 		</table>
 	</div>
 	
@@ -59,14 +59,14 @@
 					</c:forEach>
 					<tr>
 						<td><input type="button" onclick="addChar(#{0});" value="#{0}"/></td>
-						<td><input type="button" onclick="del()" value="Törlés"/> </td>
+						<td><input type="button" onclick="del();" value="Törlés"/> </td>
 					</tr>
 		</table>
 		<label id="lbld"></label>
 		
 		<h:form id="submitkkod">
-			<h:inputHidden id="inputHidden" value="#{megerositesManager.kkod}" />
-			<h:commandButton id="cmdBtn" value="beanbe jquery kkod action xsw kereses" action="#{megerositesManager.requestSzavaz()}">
+			<h:inputHidden id="inputHidden" value="#{megerositesHandler.kkod}" />
+			<h:commandButton id="cmdBtn" value="beanbe jquery kkod action xsw kereses" action="#{megerositesHandler.requestSzavaz()}">
 			</h:commandButton>
 			<h:outputScript rendered="#{not empty megerositesManager.js}">
 			var w = window.open('/Szavazas/Siker.html','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350');

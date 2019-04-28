@@ -46,8 +46,8 @@
 		        
 		        <h:column>
 		          <h:commandButton value="#{u.nev}"  action="#{navigationBean.redirectToMegerosites()}">
-		        	<f:setPropertyActionListener value="#{u}" target="#{megerositesManager.u}" />
-		        	<f:setPropertyActionListener value="#{null}" target="#{megerositesManager.js}"></f:setPropertyActionListener>
+		        	<f:setPropertyActionListener value="#{u}" target="#{megerositesHandler.u}" />
+		        	<f:setPropertyActionListener value="#{null}" target="#{megerositesHandler.js}"></f:setPropertyActionListener>
 	          	  </h:commandButton>
 		        </h:column>
 		        

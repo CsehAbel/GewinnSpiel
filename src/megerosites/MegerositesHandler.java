@@ -12,16 +12,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
-
 import authentication.Dolgozo;
 import authentication.LoginBean;
 import backend.Szavazas;
 
 @ManagedBean
 @SessionScoped
-public class MegerositesManager {
+public class MegerositesHandler {
 
 	@PersistenceContext(unitName="Szavazas")
 	private EntityManager em;
@@ -64,7 +61,7 @@ public class MegerositesManager {
 	}
 	
 	public void requestSzavaz(){
-			js="mehet";
+			js=null;
 			System.out.println("requestSazvaz: "+kkod);
 			Xsw xsw1=findXsw();
 			if(xsw1!=null && Integer.parseInt(xsw1.getDolgozokod())==Integer.parseInt(loginBean.getDolgozokod()) ){
@@ -74,8 +71,8 @@ public class MegerositesManager {
 				String kap=u.getAdoszam();
 				if(szavazas.requestSzavaz(veszit,kap,loginBean.getDolgozokod(),u.getTorzsszam())){
 						js="mehet";
+						return;
 				}
-				System.out.println(veszit+""+kap);
 			} else{
 				FacesMessage msg=new FacesMessage("Hibás kártyaszám!", "Kártyaszám");
 				msg.setSeverity(FacesMessage.SEVERITY_ERROR);

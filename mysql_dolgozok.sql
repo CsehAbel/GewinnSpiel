@@ -1,4 +1,4 @@
-USE szavazas;
+USE lokalis;
 DROP TABLE IF EXISTS dolgozo;
 CREATE TABLE dolgozo(
 	adoszam VARCHAR(40) NOT NULL,
@@ -9,6 +9,7 @@ CREATE TABLE dolgozo(
     adminn int DEFAULT 0
 );
 
+DROP TABLE if exists dolgozo_duplicate;
 CREATE TABLE dolgozo_duplicate(
 	adoszam VARCHAR(40) NOT NULL,
     torzsszam varchar(40),
@@ -18,7 +19,7 @@ CREATE TABLE dolgozo_duplicate(
 );
 
 
-#DROP TABLE dolgozo_replace;
+DROP TABLE IF EXISTS dolgozo_replace;
 CREATE TABLE dolgozo_replace(
     torzsszam varchar(40),
     ido datetime
@@ -51,6 +52,7 @@ SELECT * FROM dolgozo_duplicate WHERE adoszam=8473290267;*/
 /*TRUNCATE dolgozo,dolgozo_replace,dolgozo_duplicate egy tárol eljárást meghívni az mssql anonymous tárolt eljárás előtt*/
 /*JAVA ból meg kell hívni hogy kitöröljük időről időre*/
 DROP PROCEDURE IF EXISTS torol_dolgozo_duplicate;
+
 delimiter //
 CREATE PROCEDURE torol_dolgozo_duplicate ()
 BEGIN

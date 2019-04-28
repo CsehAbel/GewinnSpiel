@@ -48,16 +48,16 @@
 	    <h:commandButton action="#{imageStoreBean.storeImage()}" value="Mentés" />
 	</h:form>
 	<h:form>
-		<c:set var="kepek" value="#{imageManager.findKepDarab()}" />
-		<section id="photos" style="-webkit-column-count: #{kepek.size()};-moz-column-count: #{kepek.size()};column-count: #{kepek.size()};">
-			<ui:repeat value="#{imageManager.findKepid()}" var="i">
+		<c:set var="kepekHalfSize" value="#{imageHandler.findKepDarabHalfSize()}" />
+		<section id="photos" style="column-count: #{kepekHalfSize};">
+			<ui:repeat value="#{imageHandler.findKepId()}" var="i">
 				<div>
-				<h:commandLink action="#{imageManager.deleteRecept(i)}" value="">Törlés
+				<h:commandLink action="#{imageHandler.deleteKep(i)}" value="">Törlés
 					 		<f:ajax render="@all" execute="@this"></f:ajax>
 				</h:commandLink>
 				<h:graphicImage id="image" alt="feltoltott kep 1" url="/image?param1=#{i}" />
-				<div>#{imageManager.findKepekben(kepek,i).getLeiras()}</div>
-				<div>Beváltáshoz: #{imageManager.findKepekben(kepek,i).getPont()} pont</div>
+				<div>#{imageHandler.findKepekben(i).getLeiras()}</div>
+				<div>Beváltáshoz: #{imageHandler.findKepekben(i).getPont()} pont</div>
 				</div>
 			</ui:repeat>
 		</section>

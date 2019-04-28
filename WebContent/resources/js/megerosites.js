@@ -21,7 +21,7 @@ function addChar(c){
 function del(){
 	console.log("del()");
 	kartyakod='';
-	$('#lbld').val(kartyakod);
+	$('#lbld')[0].innerHTML=kartyakod;
 }
 
 function passkkodToInputHidden(){

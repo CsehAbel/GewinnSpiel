@@ -8,7 +8,7 @@ import javax.mail.internet.*;
 
 public class SendFromExchange {
 
-	public static void send(List<String> sent,boolean auth,String user,String pass,String from,String jozsi,String en,String subj,String msg)
+	public static boolean send(List<String> sent,boolean auth,String user,String pass,String from,String jozsi,String en,String subj,String msg)
 	{
 
 	    Properties props = new Properties();
@@ -36,11 +36,10 @@ public class SendFromExchange {
 
 	        Transport.send(message);
 	        
-	        sent.add("Sikeresen elküldve...");
-		    System.out.println("Sikeresen elküldve....");
-
+	        return true;
 	    } catch (MessagingException mex) {
-	    	  FacesContext.getCurrentInstance().addMessage("emailhibaf:kiinput", new FacesMessage("Email küldési hiba:"+mex.getMessage()));
+	    	mex.printStackTrace();
+	    	return false;
 	    }
 	}
 }

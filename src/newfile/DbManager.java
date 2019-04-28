@@ -21,8 +21,6 @@ import javax.inject.Named;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletResponse;
 
-import org.primefaces.context.RequestContext;
-
 import authentication.Dolgozo;
 import authentication.LoginBean;
 import backend.Pontok;

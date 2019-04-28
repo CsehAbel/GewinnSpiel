@@ -116,7 +116,10 @@ public class AdminHandler {
 			return;
 		}
 		Pontok p=dm.findPontok(d.getAdoszam());
-		if(!i2.matches("^[0-9]{1,4}$")){
+		if(!i2.matches("^[-\\+]?[0-9]{1,4}$")){
+			FacesMessage hiba=new FacesMessage("Pontok formátuma rossz.", "Rossz pont");
+			hiba.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesContext.getCurrentInstance().addMessage(null, hiba);
 			return;
 		}
 		int levontpont=Integer.parseInt(i2);

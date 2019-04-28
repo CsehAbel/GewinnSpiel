@@ -1,7 +1,8 @@
-USE szavazas;
-SELECT users_0.CODE AS 'DOLGOZOKOD', users_0.NAME AS 'DOLGOZONEV', card_0.NUMBER AS 'KARTYASZAM'
+USE lokalis;
+
+/*SELECT users_0.CODE AS 'DOLGOZOKOD', users_0.NAME AS 'DOLGOZONEV', card_0.NUMBER AS 'KARTYASZAM'
 FROM xsw_ziehl.card card_0, xsw_ziehl.users users_0
-WHERE card_0.USER_ID = users_0.ID;
+WHERE card_0.USER_ID = users_0.ID;*/
 
 DROP TABLE IF EXISTS xsw;
 CREATE TABLE xsw(
@@ -29,8 +30,6 @@ begin
 end$$
 delimiter ;
 
-
-/*DROP PROCEDURE IF EXISTS truncate_pontok;*/
 DELIMITER //
 CREATE PROCEDURE truncate_xsw_duplicate()
 BEGIN

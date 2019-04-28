@@ -1,4 +1,4 @@
-USE szavazas;
+USE lokalis;
 DROP TABLE IF EXISTS kep;
 CREATE TABLE kep (
     id int(11) NOT NULL AUTO_INCREMENT,
