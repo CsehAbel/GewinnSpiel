@@ -63,10 +63,8 @@
 		}
 		
 		function uniq(a) {
-		    var seen = {};
-		    return a.filter(function(item) {
-		        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-		    });
+		    let set=new Set(a);
+		    return Array.from(set);
 		}
 		
 		

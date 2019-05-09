@@ -83,7 +83,7 @@ public class DbManager {
 	
 	public List<Dolgozo> allDolgozo(){
 		Query query;
-		query=em.createQuery("FROM Dolgozo AS d");
+		query=em.createQuery("FROM Dolgozo AS d ORDER BY d.nev");
 		return (List<Dolgozo>) query.getResultList();
 	}
 	

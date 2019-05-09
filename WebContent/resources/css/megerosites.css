@@ -35,7 +35,7 @@ justify-content: center;}
 .kepdiv > div > #nTable{flex-grow: 3; flex-basis: 90%;}
 .kepdiv > div > label{flex-grow: 1; flex-basis: 5%;}
 .kepdiv > div > form{flex-grow:1; flex-basis: 5%;}
-.kepdiv > div > ul{flex-grow:1; flex-basis: 5%;}
+.kepdiv > div > ul{flex-grow:1; flex-basis: 5%;font-size:1.5em; color: yellow; text-shadow: black 1px 1px;}
 .kepdiv > div > form > input[type="submit"]{
 	visibility: hidden;
 }

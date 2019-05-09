@@ -68,7 +68,7 @@
 			<h:inputHidden id="inputHidden" value="#{megerositesHandler.kkod}" />
 			<h:commandButton id="cmdBtn" value="beanbe jquery kkod action xsw kereses" action="#{megerositesHandler.requestSzavaz()}">
 			</h:commandButton>
-			<h:outputScript rendered="#{not empty megerositesManager.js}">
+			<h:outputScript rendered="#{not empty megerositesHandler.js}">
 			var w = window.open('/Szavazas/Siker.html','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350');
 			w.focus();
 			setTimeout(function() {w.close();}, 1000);

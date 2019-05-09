@@ -1,5 +1,6 @@
 package authentication;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
@@ -70,12 +71,12 @@ public class LoginBean implements Serializable {
 			return nav.toLogin();
 		}
 		
-		public String doLogout(){
+		public void doLogout() throws IOException{
 			loggedIn = false;
 			FacesMessage msg=new FacesMessage("Sikeres kijelentkezés");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			dolgozokod="";
-			return nav.toLogin();
+			nav.toBDE();
 		}
 
 		public String getNev() {
