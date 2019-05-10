@@ -14,12 +14,13 @@ public class Eager{
 	
     @PostConstruct
     public void init() {
-        try {
-			fixedTimerBean.atSchedule();
+        /*try {
+			fixedTimerBean.atScheduleHonap();
+			fixedTimerBean.atScheduleNap();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
     }
 
 }

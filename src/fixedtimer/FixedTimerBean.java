@@ -20,18 +20,25 @@ public class FixedTimerBean {
 	@Inject
 	private Szavazas szavazas;
 	
+	private boolean a=false;
 	private boolean b=false;
 
+	/*@Lock(LockType.READ)
+	@Schedule(dayOfMonth="10",hour="18",minute="30",persistent= false)
+	public void atScheduleHonap() throws InterruptedException{
+		if(a){
+		workerBean.doTimerWork("pontokSzavazatEgyre");
+		}
+		a=true;
+	}
+	
 	@Lock(LockType.READ)
-	@Schedule(dayOfMonth="22",hour="11",minute="14",persistent= false)
-	public void atSchedule() throws InterruptedException{
+	@Schedule(hour="18",minute="31",persistent= false)
+	public void atScheduleNap() throws InterruptedException{
 		if(b){
-		szavazas.requestNyit();
-		workerBean.doTimerWork();;
+		workerBean.doTimerWorkSqlServer("dolgozoSzavazas");
 		}
 		b=true;
-		System.out.println(szavazas.getIState());
-		
-	}
+	}*/
 
 }

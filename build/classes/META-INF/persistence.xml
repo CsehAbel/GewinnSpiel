@@ -11,6 +11,14 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.show_sql" value="true"/>
+			<property name="wildfly.jpa.default-unit" value="true"/>
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="SzavazasSQLSERVER">
+		<jta-data-source>java:jboss/datasources/sqlserver</jta-data-source>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+			<property name="hibernate.show_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -16,6 +16,7 @@
 			<span>Bejelentkezés:</span>
 			<h:inputText p:placeholder="Törzsszám" class="txtbejel" value="#{loginBean.dolgozokod}" />
 			<h:commandButton action="#{loginBean.doLogin()}" value="Bejelentkezés" />
+			<h:commandButton class="btnkijel" action="#{loginBean.doLogout()}" value="Kilépés" />
 			<h:messages class="hiba" globalOnly="true"/>
 		</h:form>
 	</div></ui:define>

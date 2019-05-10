@@ -36,4 +36,21 @@ BEGIN
 END//
 DELIMITER ;
 
+CREATE TABLE `pontok_audit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `adoszam` varchar(40) NOT NULL,
+  `kapott` int(11) NOT NULL DEFAULT '0',
+  `szavazat` int(11) NOT NULL DEFAULT '0',
+  `dat` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+DELIMITER $$
+CREATE PROCEDURE `pontokSzavazatEgyre`()
+BEGIN
+ INSERT INTO pontok_audit(adoszam,kapott,szavazat,dat) SELECT adoszam,kapott,szavazat,now() FROM pontok;
+ UPDATE pontok SET szavazat=1;
+END$$
+DELIMITER ;
+
 
